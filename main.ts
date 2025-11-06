@@ -1,6 +1,6 @@
 import { App, staticFiles } from "fresh";
 import { type State } from "./utils.ts";
-import { getkey } from "./middlewares/redis.ts";
+import { getkey, update_services } from "./middlewares/redis.ts";
 export const app = new App<State>();
 
 app.use(staticFiles());
@@ -11,11 +11,16 @@ app.use(async (ctx) => {
   return await ctx.next();
 });
 
-app.get("/api/user/:id", async (ctx) => {
+app.get("/api/test/:id", async (ctx) => {
   const res = await getkey(ctx.params.id);
   if (res === null) {
     return new Response("Key not found", { status: 404 });
   }
+  return new Response(res.toString());
+});
+
+app.get("/api/update_services", async () => {
+  const res = await update_services();
   return new Response(res.toString());
 });
 
