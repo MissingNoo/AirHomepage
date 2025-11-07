@@ -21,6 +21,7 @@ export const handler = define.handlers({
         if (password == "c4172033b58f08ed897fc2981c3b2026c5962250c71d05a9b0dd0eb1ecfeb053") {
             headers.set("location", "/");
             headers.append("set-cookie", "loggedin=true");
+            headers.append("set-cookie", "hash=" + password.toString());
         }
         
         return new Response(null, {
