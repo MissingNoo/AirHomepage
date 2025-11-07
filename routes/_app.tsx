@@ -32,6 +32,7 @@ export default define.page(function App({ Component }) {
                 <li><a href="/projects">Projects</a></li>
                 <li><a href="/about">About</a></li>
                 <li><a href="/test" f-partial="/test">Test</a></li>
+                <li><a id="loginbt" href="/login" f-partial="/login">Login</a></li>
               </ul>
             </li>
           </ul>

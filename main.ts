@@ -1,5 +1,5 @@
 import { App, staticFiles } from "fresh";
-import { type State } from "./utils.ts";
+import { getCookie, type State } from "./utils.ts";
 import { getkey, update_services } from "./middlewares/redis.ts";
 export const app = new App<State>();
 
@@ -7,7 +7,7 @@ app.use(staticFiles());
 
 // Pass a shared value from a middleware
 app.use(async (ctx) => {
-  //ctx.state.shared = "hello";
+  ctx.state.logged_in = await getCookie(ctx, "loggedin") == "true";
   return await ctx.next();
 });
 
