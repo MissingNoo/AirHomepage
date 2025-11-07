@@ -7,6 +7,7 @@ import { encodeHex } from "jsr:@std/encoding@^1.0.10/hex";
 export interface State {
   shared: string;
   logged_in: boolean;
+  hash: string;
 }
 
 export const define = createDefine<State>();

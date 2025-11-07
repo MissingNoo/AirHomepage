@@ -1,4 +1,3 @@
-// deno-lint-ignore-file react-no-danger
 import { IS_BROWSER } from "fresh/runtime";
 export default function LoginForm() {
   if (!IS_BROWSER) return <div></div>;  

@@ -8,6 +8,7 @@ app.use(staticFiles());
 // Pass a shared value from a middleware
 app.use(async (ctx) => {
   ctx.state.logged_in = await getCookie(ctx, "loggedin") == "true";
+  ctx.state.hash = await getCookie(ctx, "hash") ?? "";
   return await ctx.next();
 });
 

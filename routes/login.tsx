@@ -2,7 +2,7 @@ import {sha256, define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import LoginForm from "../islands/LoginForm.tsx";
 
-export default define.page(async (ctx) => {
+export default define.page(() => {
   // Only render the new content
   return (
     <Partial name="docs-content">
