@@ -1,8 +1,6 @@
 import {sha256, define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import LoginForm from "../islands/LoginForm.tsx";
-import { json } from "node:stream/consumers";
-//import {verify_login} from "../middlewares/mongo.ts";
 
 export default define.page(() => {
   // Only render the new content
