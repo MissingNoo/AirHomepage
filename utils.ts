@@ -8,6 +8,7 @@ export interface State {
   shared: string;
   logged_in: boolean;
   hash: string;
+  uuid: string;
 }
 
 export const define = createDefine<State>();

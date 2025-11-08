@@ -33,6 +33,7 @@ export default define.page(function App({ Component }) {
                 <li><a href="/about">About</a></li>
                 <li><a href="/test" f-partial="/test">Test</a></li>
                 <li><a id="loginbt" href="/login" f-partial="/login">Login</a></li>
+                <li><a id="logoutbt" href="/logout" f-partial="/logout">Logout</a></li>
               </ul>
             </li>
           </ul>
