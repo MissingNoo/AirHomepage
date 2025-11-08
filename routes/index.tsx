@@ -12,9 +12,9 @@ export default define.page(function Home(ctx) {
       </Head>
 
       <div class="">
-      <HideLoginBtn loggedin={ctx.state.logged_in}></HideLoginBtn>
+      <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}></HideLoginBtn>
         <p className="m-10 bg-base-100">
-        You currently {isAllowed ? "are" : "are not"} logged in{ctx.state.logged_in ? ", with " + ctx.state.hours + " hours in bank. " : ""}
+        You currently {isAllowed ? "are" : "are not"} logged in
         </p>
       </div>
     </div>
