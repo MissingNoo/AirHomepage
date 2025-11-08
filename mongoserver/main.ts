@@ -1,4 +1,5 @@
 import {verify_login, update_hours} from "./mongo.ts";
+import { getkey } from "./redis.ts";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
@@ -6,17 +7,24 @@ async function handler(request: Request): Promise<Response> {
       switch (data.type) {
         case "login":{
           console.log("Received POST data:", data);
-          const uuid:string = await verify_login(data.username, data.password);
-          console.log("Sending " + uuid);
-          return new Response(JSON.stringify({ uuid: uuid}), {
+          const res = await verify_login(data.username, data.password);
+          return new Response(JSON.stringify(res), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });
         }
         
         case "update": {
-          await update_hours(data.uuid);
+          await update_hours(data.id);
           return new Response(JSON.stringify({ "message" : "updated"}), {
+            headers: { "Content-Type": "application/json" },
+            status: 200,
+          });
+        }
+
+        case "get_hours": {
+          const hours:string = await getkey(data.id) ?? "00:00";
+          return new Response(JSON.stringify({ hours: hours}), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });

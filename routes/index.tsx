@@ -1,11 +1,9 @@
-import { Head } from "fresh/runtime";
+import { Head, IS_BROWSER } from "fresh/runtime";
 import { define } from "../utils.ts";
 import HideLoginBtn from "../islands/HideLoginBtn.tsx";
 
 export default define.page(function Home(ctx) {
   const isAllowed = ctx.state.logged_in;
-  
-  
   //const count = useSignal(3);  
   return (
     <div>
@@ -16,10 +14,9 @@ export default define.page(function Home(ctx) {
       <div class="">
       <HideLoginBtn loggedin={ctx.state.logged_in}></HideLoginBtn>
         <p className="m-10 bg-base-100">
-        You currently {isAllowed ? "are" : "are not"} logged in.
+        You currently {isAllowed ? "are" : "are not"} logged in{ctx.state.logged_in ? ", with " + ctx.state.hours + " hours in bank. " : ""}
         </p>
       </div>
-
     </div>
   );
 });

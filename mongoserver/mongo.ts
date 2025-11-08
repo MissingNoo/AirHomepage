@@ -1,4 +1,5 @@
 import { Db, MongoClient } from "mongodb";
+import { setkey } from "./redis.ts";
 import holidays from "./holidays.json" with { type: "json" };
 
 type Holidays = { [key: string]: string };
@@ -26,7 +27,7 @@ export async function verify_login(username:string, password:string) {
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ username: username });
   if (user?.password == password) {
-    return user.uuid;
+    return {uuid : user.uuid, id : user.id};
   } else {
     return "";
   }
@@ -98,7 +99,7 @@ export async function update_hours(uuid:string) {
                         minutes -= Number.parseInt(lunch_time[1]);
                         hours -= Number.parseInt(lunch_time[0]);
                     }
-                    let total:Array<string> = ["", ""];
+                    /*let total:Array<string> = ["", ""];
                     let extra:Array<string> = ["", ""];
                     if (!bh) {
                         total = hour_diff(lunch_time[0] + ":" + lunch_time[1], worked_hours[0] + ":" + worked_hours[1]).split(":");
@@ -110,7 +111,10 @@ export async function update_hours(uuid:string) {
                         
                         hours = parseInt(extra[0]);
                         minutes = parseInt(extra[1]);
-                        console.log("extra [" + month + "/" + day + "] " + extra);
+                        console.log("extra [" + month + "/" + day + "] " + extra);*/
+                    if (!bh) {
+                        hours -= 7;
+                        minutes -= 20;
                     } else {
                         bh_time = hour_diff(worked_hours[0] + ":" + worked_hours[1] , "07:20").split(":");
                     }
@@ -170,6 +174,7 @@ export async function update_hours(uuid:string) {
     const hourstring = (totalhours < 10 ? "0" : "") + totalhours.toString();
     const minutesstring = (totalminutes < 10 ? "0" : "") + totalminutes.toString();
     console.log("total: " + hourstring + ":" + minutesstring);
+    setkey(user.id.toString(), hourstring + ":" + minutesstring);
 }
 
 async function _migration(uuid:string) {

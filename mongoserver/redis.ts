@@ -4,6 +4,14 @@ export async function getkey(key:string) {
     const redisClient = new RedisClient(redisConn);
     const result = await redisClient.sendCommand(["GET", key]);
     redisConn.close();
+    return result?.toString();
+}
+
+export async function setkey(key:string, value:string) {    
+    using redisConn = await Deno.connect({ port: 6379 });
+    const redisClient = new RedisClient(redisConn);
+    const result = await redisClient.sendCommand(["SET", key, value]);
+    redisConn.close();
     return result;
 }
 

@@ -1,4 +1,4 @@
-import {sha256, define } from "../utils.ts";
+import {sha256, define, fetch_data} from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import LoginForm from "../islands/LoginForm.tsx";
 
@@ -21,24 +21,15 @@ export const handler = define.handlers({
           type: "login",
           username, password
         }
-        let uuid = "";
-        const url = "http://127.0.0.1:8000";
-        try {
-          const response = await fetch(url, {
-            body : JSON.stringify(j),
-            method: "POST"
-          });
-          const res = await response.json();
-          uuid = res.uuid;
-          // deno-lint-ignore no-explicit-any
-        } catch (error:any) {
-          console.error(error.message);
-        }    
+        const data = await fetch_data(j);
+        const uuid = data.uuid;
+        const id = data.id;
         
         if (uuid != "") {
             headers.set("location", "/");
             headers.append("set-cookie", "loggedin=true");
             headers.append("set-cookie", "uuid=" + uuid.toString());
+            headers.append("set-cookie", "id=" + id.toString());
         }
         
         return new Response(null, {
