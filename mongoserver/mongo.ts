@@ -1,5 +1,9 @@
 import { Db, MongoClient } from "mongodb";
 import holidays from "./holidays.json" with { type: "json" };
+
+type Holidays = { [key: string]: string };
+const typedHolidays: Holidays = holidays;
+// deno-lint-ignore no-import-prefix
 import moment from "https://deno.land/x/momentjs@2.29.1-deno/mod.ts";
 interface LoginData {
   id: number;
@@ -68,17 +72,18 @@ export async function update_hours(uuid:string) {
     for (let year = 2025; year <= current_year; year++) {
         for (let month = 1; month <= 12; month++) {
             for (let day = 1; day <= 32; day++) {
-                let holiday = holidays["y" + year + "m" + month + "d" + day] != undefined;
+                const holiday:boolean = typedHolidays["y" + year + "m" + month + "d" + day] != undefined;
                 const today = await info.findOne({ id: user.id, year : year, month, day});
                 if (today && today.is_reset) {
                     totalhours = 0;
                     totalminutes = 0;
+                    console.log("[" + month + "/" + day + "] RESET");
                 }
                 if (today && !today.is_reset) {
                     const is_sunday = moment.utc(moment(year + "/" + month + "/" + day + " " + today.almoco, "YYYY/MM/DD HH:mm:ss")).format("dddd") == "Sunday";
-                    let bh = false;
+                    let bh:boolean = false;
                     let bh_time:Array<string> = ["", ""];
-                    let had_lunch = false;
+                    let had_lunch:boolean = false;
                     let lunch_time:Array<string> = ["", ""];
                     if (today.almoco && today.volta) {
                         had_lunch = true;
@@ -93,9 +98,19 @@ export async function update_hours(uuid:string) {
                         minutes -= Number.parseInt(lunch_time[1]);
                         hours -= Number.parseInt(lunch_time[0]);
                     }
+                    let total:Array<string> = ["", ""];
+                    let extra:Array<string> = ["", ""];
                     if (!bh) {
-                        hours -= 7;
-                        minutes -= 20;
+                        total = hour_diff(lunch_time[0] + ":" + lunch_time[1], worked_hours[0] + ":" + worked_hours[1]).split(":");
+                        if (parseInt(total[0]) < 7) {
+                            extra = hour_diff(total[0] + ":" + total[1], "07:20").split(":");
+                        } else {
+                            extra = hour_diff("07:20", total[0] + ":" + total[1]).split(":");
+                        }
+                        
+                        hours = parseInt(extra[0]);
+                        minutes = parseInt(extra[1]);
+                        console.log("extra [" + month + "/" + day + "] " + extra);
                     } else {
                         bh_time = hour_diff(worked_hours[0] + ":" + worked_hours[1] , "07:20").split(":");
                     }
@@ -108,31 +123,45 @@ export async function update_hours(uuid:string) {
                     if (!holiday) {
                         if (!bh) {
                             if (is_sunday) {
-                                console.log("Sunday");
+                                console.log("[" + month + "/" + day + "] Sunday");
                             }
                             if (!is_sunday) {
-                                console.log("[" + month + "/" + day + "] + (" + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ")");
                                 totalhours += hours;
                                 totalminutes += minutes;
+                                if (totalminutes >= 60) {
+                                    totalminutes -= 60;
+                                    totalhours++;
+                                }
+            
+                                if (totalminutes < 0) {
+                                    totalminutes += 60;
+                                    totalhours--;
+                                }
+                                const hourstring = (totalhours < 10 ? "0" : "") + totalhours.toString();
+                                const minutesstring = (totalminutes < 10 ? "0" : "") + totalminutes.toString();
+                                console.log("[" + month + "/" + day + "] + (" + (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes) + ") " + hourstring + ":" + minutesstring);
                             } /* else if (hours < 0) {
                                 totalhours += hours;
                                 totalminutes += minutes;
                             }*/
                         } else {
-                            console.log("[" + month + "/" + day + "] - (" + bh_time[0] + ":" + bh_time[1] + ")");
                             totalhours -= Number.parseInt(bh_time[0]);
                             totalminutes -= Number.parseInt(bh_time[1]);
+                            if (totalminutes >= 60) {
+                                totalminutes -= 60;
+                                totalhours++;
+                            }
+        
+                            if (totalminutes < 0) {
+                                totalminutes += 60;
+                                totalhours--;
+                            }
+                            const hourstring = (totalhours < 10 ? "0" : "") + totalhours.toString();
+                            const minutesstring = (totalminutes < 10 ? "0" : "") + totalminutes.toString();
+                            console.log("[" + month + "/" + day + "] - (" + bh_time[0] + ":" + bh_time[1] + ") " + hourstring + ":" + minutesstring);
                         }
-                    }                    
-                    
-                    if (totalminutes >= 60) {
-                        totalminutes -= 60;
-                        totalhours++;
-                    }
-
-                    if (totalminutes < 0) {
-                        totalminutes += 60;
-                        totalhours--;
+                    } else {
+                        console.log("[" + month + "/" + day + "] Holiday");
                     }
                 }
             }   
