@@ -16,7 +16,7 @@ export const handler = define.handlers({
     const form = await ctx.req.formData();
     const username = form.get("username")?.toString() ?? "";
     const password = await sha256(form.get("password")?.toString() ?? "");
-    const headers = ctx.req.headers;
+    const headers = new Headers;
     const j = {
       type: "login",
       username,

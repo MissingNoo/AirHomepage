@@ -27,7 +27,7 @@ export const handler = define.handlers({
       saida,
       uuid,
     };
-    const headers = ctx.req.headers;
+    const headers = new Headers;
     const res = await fetch_data(j);
     //console.log(res);
     if (res.message == "Invalid") {
