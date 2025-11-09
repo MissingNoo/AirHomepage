@@ -4,7 +4,7 @@ import { Button } from "../components/Button.tsx";
 import { IS_BROWSER } from "fresh/runtime";
 interface CounterProps {
   count: Signal<number>;
-  text : Signal<string>;
+  text: Signal<string>;
 }
 
 async function getData() {
@@ -16,22 +16,21 @@ async function getData() {
     }
     const result = await response.text();
     return result;
-  // deno-lint-ignore no-explicit-any
-  } catch (error:any) {
+    // deno-lint-ignore no-explicit-any
+  } catch (error: any) {
     console.error(error.message);
   }
 }
-
 
 export default function Counter(props: CounterProps) {
   if (!IS_BROWSER) return <div></div>;
   getData().then((res) => {
     props.text.value = res?.toString() ?? "";
-  })
-  
+  });
+
   return (
     <div class="flex gap-8 py-6">
-      <p dangerouslySetInnerHTML={{__html: props.text.value}}></p>
+      <p dangerouslySetInnerHTML={{ __html: props.text.value }}></p>
       <Button id="decrement" onClick={() => props.count.value -= 1}>-1</Button>
       <p class="text-3xl tabular-nums">{props.count}</p>
       <Button id="increment" onClick={() => props.count.value += 1}>+1</Button>

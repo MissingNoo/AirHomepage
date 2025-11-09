@@ -5,9 +5,8 @@ export default define.page(() => {
   return (
     <Partial name="docs-content">
       <div class="p-2">
-        <embed src="/vcure/index.html"  class="w-full h-screen flex"/>
+        <embed src="/vcure/index.html" class="w-full h-screen flex" />
       </div>
-      
     </Partial>
   );
 });

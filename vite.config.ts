@@ -5,6 +5,6 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [fresh(), tailwindcss()],
   server: {
-    allowedHosts: ["bh.337494.xyz"]
-  }
+    allowedHosts: ["bh.337494.xyz"],
+  },
 });

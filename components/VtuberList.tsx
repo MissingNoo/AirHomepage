@@ -7,9 +7,28 @@ export default function VtuberList() {
         Favorite VTubers
       </li>
 
-      <Vtuber name="Hakos Baelz" img="baelz.png" description="test" ytlink="https://www.youtube.com/@HakosBaelz"></Vtuber>
-      <Vtuber name="Yumemi Caelestis" img="ymm.png" description="test" ytlink="https://www.youtube.com/@yumemivt" twitchlink="https://www.twitch.tv/yumemivt"></Vtuber>
-      <Vtuber name="Lumin Tsukiboshi" img="lumin.png" description="test2" ytlink="https://www.youtube.com/@LuminTsukiboshi"></Vtuber>
+      <Vtuber
+        name="Hakos Baelz"
+        img="baelz.png"
+        description="test"
+        ytlink="https://www.youtube.com/@HakosBaelz"
+      >
+      </Vtuber>
+      <Vtuber
+        name="Yumemi Caelestis"
+        img="ymm.png"
+        description="test"
+        ytlink="https://www.youtube.com/@yumemivt"
+        twitchlink="https://www.twitch.tv/yumemivt"
+      >
+      </Vtuber>
+      <Vtuber
+        name="Lumin Tsukiboshi"
+        img="lumin.png"
+        description="test2"
+        ytlink="https://www.youtube.com/@LuminTsukiboshi"
+      >
+      </Vtuber>
     </ul>
   );
 }

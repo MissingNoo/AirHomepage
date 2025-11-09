@@ -16,29 +16,42 @@ export default define.page(function App({ Component }) {
               <img height="256" src="/pfp.png" />
             </div>
           </div>
-          {/*<img
+          {
+            /*<img
             class="my-6"
             src="/logo.svg"
             width="128"
             height="128"
             alt="the Fresh logo: a sliced lemon dripping with juice"
-          />*/}
-          
+          />*/
+          }
         </div>
         <div className="max-w-3x1 bg-base-200">
           <div className="items-center list">
             <h1 class="text-4xl font-bold m-5">Airgeadlamh</h1>
           </div>
-          
+
           <ul className="items-center list bg-base-200">
             <li>
               <ul className="menu menu-vertical lg:menu-horizontal bg-base-200">
-                <li><a href="/">Home</a></li>
-                <li><a href="/projects">Projects</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/test" f-partial="/test">Test</a></li>
-                <li><a id="loginbt" href="/login" f-partial="/login">Login</a></li>
-                <li><a id="logoutbt" href="/logout" f-partial="/logout">Logout</a></li>
+                <li>
+                  <a href="/">Home</a>
+                </li>
+                <li>
+                  <a href="/projects">Projects</a>
+                </li>
+                <li>
+                  <a href="/about">About</a>
+                </li>
+                <li>
+                  <a href="/test" f-partial="/test">Test</a>
+                </li>
+                <li>
+                  <a id="loginbt" href="/login" f-partial="/login">Login</a>
+                </li>
+                <li>
+                  <a id="logoutbt" href="/logout" f-partial="/logout">Logout</a>
+                </li>
               </ul>
             </li>
           </ul>
@@ -48,18 +61,35 @@ export default define.page(function App({ Component }) {
           <div className="drawer lg:drawer-open">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col">
-              <label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden">Sidebar</label>
+              <label
+                htmlFor="my-drawer-3"
+                className="btn drawer-button lg:hidden"
+              >
+                Sidebar
+              </label>
               <Partial name="body">
                 <Component />
               </Partial>
               {/**/}
             </div>
             <div className="drawer-side">
-              <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+              <label
+                htmlFor="my-drawer-3"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              >
+              </label>
               <ul className="menu bg-base-200 min-h-full flex p-4">
                 {/* Sidebar content here */}
-                <li className="bg-base-100 rounded-box shadow-md self-center m-5 p-7" id="hours">Hours</li>
-                <li><VtuberList></VtuberList></li>
+                <li
+                  className="bg-base-100 rounded-box shadow-md self-center m-5 p-7"
+                  id="hours"
+                >
+                  Hours
+                </li>
+                <li>
+                  <VtuberList></VtuberList>
+                </li>
               </ul>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import {add_hours, verify_login, update_hours} from "./mongo.ts";
+import { add_hours, update_hours, verify_login } from "./mongo.ts";
 import { getkey } from "./redis.ts";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
@@ -6,7 +6,7 @@ async function handler(request: Request): Promise<Response> {
       const data = await request.json(); // Assuming JSON body
       //console.log(data);
       switch (data.type) {
-        case "login":{
+        case "login": {
           console.log("Received POST data:", data);
           const res = await verify_login(data.username, data.password);
           return new Response(JSON.stringify(res), {
@@ -14,25 +14,25 @@ async function handler(request: Request): Promise<Response> {
             status: 200,
           });
         }
-        
+
         case "update": {
           await update_hours(data.uuid);
-          return new Response(JSON.stringify({ "message" : "updated"}), {
+          return new Response(JSON.stringify({ "message": "updated" }), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });
         }
 
         case "get_hours": {
-          const hours:string = await getkey(data.id) ?? "00:00";
-          return new Response(JSON.stringify({ hours: hours}), {
+          const hours: string = await getkey(data.id) ?? "00:00";
+          return new Response(JSON.stringify({ hours: hours }), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });
         }
 
         case "add_hours": {
-          const res = {"message": ""};
+          const res = { "message": "" };
           console.log("Received POST data:", data);
           let can_add = true;
           if (data.day == "" || data.entrada == "" || data.saida == "") {
@@ -49,15 +49,14 @@ async function handler(request: Request): Promise<Response> {
           });
         }
 
-        default:{
+        default: {
           console.log(data.toString());
-          return new Response(JSON.stringify({ "message" : "unknown"}), {
+          return new Response(JSON.stringify({ "message": "unknown" }), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });
         }
       }
-      
     } catch (_error) {
       return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
         headers: { "Content-Type": "application/json" },

@@ -15,7 +15,7 @@ export interface State {
 
 export const define = createDefine<State>();
 
-export function getCookie(ctx:RenderableProps<PageProps>, name:string) {
+export function getCookie(ctx: RenderableProps<PageProps>, name: string) {
   const cookies = ctx.req.headers.get("cookie")?.split(";") ?? [];
   const foocookie = cookies.findIndex((v) => {
     return v.replaceAll(" ", "").split("=")[0] == name;
@@ -27,25 +27,24 @@ export function getCookie(ctx:RenderableProps<PageProps>, name:string) {
   return result;
 }
 
-export async function sha256(input:string) {
-
+export async function sha256(input: string) {
   const messageBuffer = new TextEncoder().encode(input.toString());
   const hashBuffer = await crypto.subtle.digest("SHA-256", messageBuffer);
   const hash = encodeHex(hashBuffer);
   return hash;
 }
 
-export async function fetch_data(j:any) {
+export async function fetch_data(j: any) {
   const url = "http://127.0.0.1:8000";
   try {
     const response = await fetch(url, {
-      body : JSON.stringify(j),
-      method: "POST"
+      body: JSON.stringify(j),
+      method: "POST",
     });
     const res = await response.json();
     return res;
     // deno-lint-ignore no-explicit-any
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error.message);
-  }    
+  }
 }

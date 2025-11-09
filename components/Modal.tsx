@@ -13,7 +13,9 @@ export function Modal(props: ModalProps) {
         id={props.button_id}
         class="btn"
         onClick={() => {
-          const modal = props.modal_id ? document.getElementById(props.modal_id) : null;
+          const modal = props.modal_id
+            ? document.getElementById(props.modal_id)
+            : null;
           if (modal instanceof HTMLDialogElement) {
             modal.showModal();
           }

@@ -4,7 +4,7 @@ import HideLoginBtn from "../islands/HideLoginBtn.tsx";
 
 export default define.page(function Home(ctx) {
   const isAllowed = ctx.state.logged_in;
-  //const count = useSignal(3);  
+  //const count = useSignal(3);
   return (
     <div>
       <Head>
@@ -12,9 +12,10 @@ export default define.page(function Home(ctx) {
       </Head>
 
       <div class="">
-      <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}></HideLoginBtn>
+        <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
+        </HideLoginBtn>
         <p className="m-10 bg-base-100">
-        You currently {isAllowed ? "are" : "are not"} logged in
+          You currently {isAllowed ? "are" : "are not"} logged in
         </p>
       </div>
     </div>
