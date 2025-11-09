@@ -10,13 +10,12 @@ function reload() {
   setTimeout(function() { location.reload(); }, 100);
 }
 
-function date_selected(params:any) {
+function date_selected() {
   const d = document.getElementById("date");
   if (d) {
     location.replace("?date=" + (d as HTMLInputElement).value);
   }
-  
-  console.log(location.search);
+  //console.log(location.search);
 }
 
 export default function BHInsert(props: props) {

@@ -7,7 +7,7 @@ async function handler(request: Request): Promise<Response> {
       //console.log(data);
       switch (data.type) {
         case "login": {
-          console.log("Received POST data:", data);
+          //console.log("Received POST data:", data);
           const res = await verify_login(data.username, data.password);
           return new Response(JSON.stringify(res), {
             headers: { "Content-Type": "application/json" },
@@ -25,7 +25,7 @@ async function handler(request: Request): Promise<Response> {
 
         case "get_day": {
           const d = await get_day(data);
-          console.log(d)
+          //console.log(d)
           return new Response(JSON.stringify(d), {
             headers: { "Content-Type": "application/json" },
             status: 200,
@@ -42,7 +42,7 @@ async function handler(request: Request): Promise<Response> {
 
         case "add_hours": {
           const res = { "message": "" };
-          console.log("Received POST data:", data);
+          //console.log("Received POST data:", data);
           let can_add = true;
           if (data.day == "" || data.entrada == "" || data.saida == "") {
             res.message = "Invalid";

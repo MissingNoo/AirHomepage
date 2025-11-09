@@ -29,7 +29,7 @@ export const handler = define.handlers({
     };
     const headers = ctx.req.headers;
     const res = await fetch_data(j);
-    console.log(res);
+    //console.log(res);
     if (res.message == "Invalid") {
       headers.set("location", ctx.route + "?error=true");
     } else { 
