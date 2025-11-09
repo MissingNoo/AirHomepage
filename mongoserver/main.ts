@@ -1,9 +1,10 @@
-import {verify_login, update_hours} from "./mongo.ts";
+import {add_hours, verify_login, update_hours} from "./mongo.ts";
 import { getkey } from "./redis.ts";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
       const data = await request.json(); // Assuming JSON body
+      //console.log(data);
       switch (data.type) {
         case "login":{
           console.log("Received POST data:", data);
@@ -15,7 +16,7 @@ async function handler(request: Request): Promise<Response> {
         }
         
         case "update": {
-          await update_hours(data.id);
+          await update_hours(data.uuid);
           return new Response(JSON.stringify({ "message" : "updated"}), {
             headers: { "Content-Type": "application/json" },
             status: 200,
@@ -25,6 +26,24 @@ async function handler(request: Request): Promise<Response> {
         case "get_hours": {
           const hours:string = await getkey(data.id) ?? "00:00";
           return new Response(JSON.stringify({ hours: hours}), {
+            headers: { "Content-Type": "application/json" },
+            status: 200,
+          });
+        }
+
+        case "add_hours": {
+          const res = {"message": ""};
+          console.log("Received POST data:", data);
+          let can_add = true;
+          if (data.day == "" || data.entrada == "" || data.saida == "") {
+            res.message = "Invalid";
+            can_add = false;
+          }
+          if (can_add) {
+            add_hours(data);
+            await update_hours(data.uuid);
+          }
+          return new Response(JSON.stringify(res), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });

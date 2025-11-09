@@ -13,7 +13,7 @@ export default define.page(function App({ Component }) {
         <div class="max-w flex flex-col items-center justify-center my-6">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-38 rounded-full ring-2 ring-offset-2">
-              <img height="256" src="pfp.png" />
+              <img height="256" src="/pfp.png" />
             </div>
           </div>
           {/*<img

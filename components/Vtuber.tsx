@@ -13,7 +13,7 @@ export function Vtuber(props: VtuberProps) {
 
   return (
     <li className="list flex flex-col items-center bg-base-100 rounded-box m-5">
-        <div><img className="size-10 rounded-box" src={props.img}/></div>
+        <div><img className="size-10 rounded-box" src={"/" + props.img}/></div>
         <div className="list">
           <div>{props.name}</div>
           {/*<div className="text-xs uppercase font-semibold opacity-60">{props.description}</div>*/}

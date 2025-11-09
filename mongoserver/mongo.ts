@@ -43,6 +43,17 @@ interface BHold {
     horario: string;
   }
 
+  interface BHAdd {
+    uuid: string;
+    year: number;
+    month: number;
+    day: number;
+    entrada: string;
+    almoco: string;
+    volta: string;
+    saida: string;
+  }
+
 interface BH {
     id: number;
     year: number;
@@ -57,6 +68,29 @@ interface BH {
 
 function hour_diff(start:string, end:string) {
     return moment.utc(moment(end, "HH:mm:ss").diff(moment(start, "HH:mm:ss"))).format("HH:mm");
+}
+
+export async function add_hours(data:BHAdd) {
+    const db:Db = connect_db();
+    const users = db.collection<LoginData>("users");
+    const user = await users.findOne({ uuid: data.uuid });
+    if (!user) {throw new Error("User not found!");}
+    const info = db.collection<BH>(user.id.toString());
+    const date = data.day.toString().split("-");
+    if (user) {
+        info.insertOne({
+            id: user.id,
+            entrada: data.entrada,
+            almoco: data.almoco,
+            volta: data.volta,
+            saida: data.saida,
+            day: parseInt(date[2]),
+            month: parseInt(date[1]),
+            year: parseInt(date[0]),
+            is_reset: false
+        })
+        
+    }
 }
 
 export async function update_hours(uuid:string) {
