@@ -1,49 +1,99 @@
-import { IS_BROWSER } from "fresh/runtime";
+import { useEffect } from "preact/hooks";
+import { fetch_data } from "../utils.ts";
 interface props {
   loggedin: boolean;
+  message: string;
+  uuid: string;
 }
+
+function reload() {
+  setTimeout(function() { location.reload(); }, 100);
+}
+
+function date_selected(params:any) {
+  const d = document.getElementById("date");
+  if (d) {
+    location.replace("?date=" + (d as HTMLInputElement).value);
+  }
+  
+  console.log(location.search);
+}
+
 export default function BHInsert(props: props) {
-  if (!IS_BROWSER) return <div></div>;
+  useEffect(() => {
+    const date = new Date();
+    let datestring = date.getFullYear().toString().padStart(4, '0') + '-' + (date.getMonth()+1).toString().padStart(2, '0') + '-' + date.getDate().toString().padStart(2, '0');
+    const dateInput = document.getElementById('date') as HTMLInputElement | null;
+    if (dateInput) {
+      if (location.search.toString().indexOf("date") != -1) {
+        datestring = location.search.replace("?", "").split("=")[1];
+        const dd = datestring.split("-");
+        fetch_data({type: "get_day", uuid:props.uuid, year : parseInt(dd[0]), month : parseInt(dd[1]), day: parseInt(dd[2])}, "/api/get-day").then((res) => {
+          const entrada = document.getElementById("entrada");
+          if (entrada) {
+            (entrada as HTMLInputElement).value = res.entrada;
+          }
+          const almoco = document.getElementById("almoco");
+          if (almoco) {
+            (almoco as HTMLInputElement).value = res.almoco;
+          }
+          const volta = document.getElementById("volta");
+          if (volta) {
+            (volta as HTMLInputElement).value = res.volta;
+          }
+          const saida = document.getElementById("saida");
+          if (saida) {
+            (saida as HTMLInputElement).value = res.saida;
+          }
+          const sub = document.getElementById("sub");
+          if (sub) {
+            sub.textContent = "Update";
+          }
+        });
+        
+      }
+      dateInput.value = datestring;
+    }
+  })
   if (!props.loggedin) {
     return <p>Not logged in</p>;
   }
   /*getData().then((res) => {
     props.text.value = res?.toString() ?? "";
-  })*/
-
+  })
+    
+    */
   return (
     <div class="flex flex-col gap-8 py-6 items-center">
-      <script type="module" src="https://unpkg.com/cally"></script>
-      <p>Inserir</p>
-      <form method="post">
+      <form onSubmit={reload} method="post">
         <label className="input m-1">
           <span className="label">Dia</span>
-          <input name="dia" type="date" className="input" />
+          <input onChange={date_selected} id="date" name="dia" type="date" className="input" />
         </label>
         <p></p>
         <label className="input m-1">
           <span className="label">Entrada</span>
-          <input name="entrada" type="time" className="input" />
+          <input id="entrada" name="entrada" type="time" className="input" />
         </label>
         <p></p>
         <label className="input m-1">
           <span className="label">Almoço</span>
-          <input name="almoco" type="time" className="input" />
+          <input id="almoco" name="almoco" type="time" className="input" />
         </label>
         <p></p>
         <label className="input m-1">
           <span className="label">Volta</span>
-          <input name="volta" type="time" className="input" />
+          <input id="volta" name="volta" type="time" className="input" />
         </label>
         <p></p>
         <label className="input m-1">
           <span className="label">Saida</span>
-          <input name="saida" type="time" className="input" />
+          <input id="saida" name="saida" type="time" className="input" />
         </label>
         <p></p>
-        <button class="btn justify-center" type="submit">Inserir</button>
+        <button id="sub" class="btn justify-center" type="submit">Inserir</button>
       </form>
-      <p id="test"></p>
+      <p class="text-3xl tabular-nums">{props.message}</p>
     </div>
   );
 }

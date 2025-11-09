@@ -19,5 +19,13 @@ app.use(async (ctx) => {
   return await ctx.next();
 });
 
+app.post("/api/get-day", async (ctx) => {
+  const d = await fetch_data(await ctx.req.json());
+  return new Response(JSON.stringify({entrada: d.entrada, almoco : d.almoco, volta : d.volta, saida: d.saida}), {
+    headers: { "Content-Type": "application/json" },
+    status: 200,
+  });
+});
+
 // Include file-system based routes here
 app.fsRoutes();

@@ -2,6 +2,7 @@ import BHInsert from "../../islands/BHInsert.tsx";
 import { define } from "../../utils.ts";
 import { Partial } from "fresh/runtime";
 import { fetch_data, getCookie } from "../../utils.ts";
+import HideLoginBtn from "../../islands/HideLoginBtn.tsx";
 export const handler = define.handlers({
   async POST(ctx) {
     if (!ctx.state.logged_in) {
@@ -26,17 +27,13 @@ export const handler = define.handlers({
       saida,
       uuid,
     };
-    console.log(uuid);
-    console.log(day);
-    console.log(entrada);
-    console.log(almoco);
-    console.log(volta);
-    console.log(saida);
     const headers = ctx.req.headers;
     const res = await fetch_data(j);
     console.log(res);
     if (res.message == "Invalid") {
       headers.set("location", ctx.route + "?error=true");
+    } else { 
+      headers.set("location", "/projects/BH");
     }
 
     return new Response(null, {
@@ -47,12 +44,18 @@ export const handler = define.handlers({
 });
 
 export default define.page((ctx) => {
-  // Only render the new content
+  let message = "";
+  const param = ctx.url.searchParams.toString();
+  if (param == "error=true") {
+    message = "Dados invalidos";
+  }
+  //Only render the new content
   return (
     <Partial name="docs-content">
       <div>
-        <BHInsert loggedin={ctx.state.logged_in}>
+        <BHInsert uuid={ctx.state.uuid} message={message} loggedin={ctx.state.logged_in}>
         </BHInsert>
+        <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}></HideLoginBtn>
       </div>
     </Partial>
   );

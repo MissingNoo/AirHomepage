@@ -1,4 +1,4 @@
-import { add_hours, update_hours, verify_login } from "./mongo.ts";
+import { add_hours, update_hours, verify_login, get_day} from "./mongo.ts";
 import { getkey } from "./redis.ts";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
@@ -18,6 +18,15 @@ async function handler(request: Request): Promise<Response> {
         case "update": {
           await update_hours(data.uuid);
           return new Response(JSON.stringify({ "message": "updated" }), {
+            headers: { "Content-Type": "application/json" },
+            status: 200,
+          });
+        }
+
+        case "get_day": {
+          const d = await get_day(data);
+          console.log(d)
+          return new Response(JSON.stringify(d), {
             headers: { "Content-Type": "application/json" },
             status: 200,
           });

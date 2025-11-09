@@ -2,6 +2,7 @@ import { createDefine, PageProps } from "fresh";
 // @ts-types="preact"
 import { RenderableProps } from "preact";
 import { encodeHex } from "jsr:@std/encoding@^1.0.10/hex";
+import { Signal } from "@preact/signals";
 // This specifies the type of "ctx.state" which is used to share
 // data among middlewares, layouts and routes.
 export interface State {
@@ -11,6 +12,7 @@ export interface State {
   uuid: string;
   id: string;
   hours: string;
+  message: Signal<string>;
 }
 
 export const define = createDefine<State>();
@@ -34,8 +36,8 @@ export async function sha256(input: string) {
   return hash;
 }
 
-export async function fetch_data(j: any) {
-  const url = "http://127.0.0.1:8000";
+// deno-lint-ignore no-explicit-any
+export async function fetch_data(j: any, url: string = "http://127.0.0.1:8000") {
   try {
     const response = await fetch(url, {
       body: JSON.stringify(j),

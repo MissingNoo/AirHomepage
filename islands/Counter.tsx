@@ -23,7 +23,7 @@ async function getData() {
 }
 
 export default function Counter(props: CounterProps) {
-  if (!IS_BROWSER) return <div></div>;
+  //if (!IS_BROWSER) return <div></div>;
   getData().then((res) => {
     props.text.value = res?.toString() ?? "";
   });

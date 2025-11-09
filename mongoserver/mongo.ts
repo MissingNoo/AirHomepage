@@ -78,6 +78,7 @@ export async function add_hours(data: BHAdd) {
   if (!user) throw new Error("User not found!");
   const info = db.collection<BH>(user.id.toString());
   const date = data.day.toString().split("-");
+  //const already = info. //TODO: don't add if exists
   if (user) {
     info.insertOne({
       id: user.id,
@@ -91,6 +92,15 @@ export async function add_hours(data: BHAdd) {
       is_reset: false,
     });
   }
+}
+
+export async function get_day(data:any) {
+  const db: Db = connect_db();
+  const users = db.collection<LoginData>("users");
+  const user = await users.findOne({ uuid: data.uuid });
+  if (!user) throw new Error("User not found!");
+  const info = db.collection<BH>(user.id.toString());
+  return await info.findOne({year:data.year, month: data.month, day: data.day})
 }
 
 export async function update_hours(uuid: string) {
