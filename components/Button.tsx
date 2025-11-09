@@ -10,7 +10,7 @@ export function Button(props: ButtonProps) {
   return (
     <button
       {...props}
-      class="btn"
+      class="btn" type="submit"
     />
   );
 }

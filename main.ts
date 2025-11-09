@@ -21,9 +21,18 @@ app.use(async (ctx) => {
 
 app.post("/api/get-day", async (ctx) => {
   const d = await fetch_data(await ctx.req.json());
-  return new Response(JSON.stringify({entrada: d.entrada, almoco : d.almoco, volta : d.volta, saida: d.saida}), {
+  // deno-lint-ignore no-explicit-any
+  let res:any = {message: "no data"};
+  let status = 404;
+  try {
+    res = { message:"sucess", entrada: d.entrada, almoco : d.almoco, volta : d.volta, saida: d.saida};
+    status = 200;
+  } catch (_error) {
+    //
+  }
+  return new Response(JSON.stringify(res), {
     headers: { "Content-Type": "application/json" },
-    status: 200,
+    status,
   });
 });
 

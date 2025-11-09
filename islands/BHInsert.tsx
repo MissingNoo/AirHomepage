@@ -1,13 +1,10 @@
 import { useEffect } from "preact/hooks";
-import { fetch_data } from "../utils.ts";
+import { reload, fetch_data } from "../utils.ts";
+
 interface props {
   loggedin: boolean;
   message: string;
   uuid: string;
-}
-
-function reload() {
-  setTimeout(function() { location.reload(); }, 100);
 }
 
 function date_selected() {
@@ -28,26 +25,29 @@ export default function BHInsert(props: props) {
         datestring = location.search.replace("?", "").split("=")[1];
         const dd = datestring.split("-");
         fetch_data({type: "get_day", uuid:props.uuid, year : parseInt(dd[0]), month : parseInt(dd[1]), day: parseInt(dd[2])}, "/api/get-day").then((res) => {
-          const entrada = document.getElementById("entrada");
-          if (entrada) {
-            (entrada as HTMLInputElement).value = res.entrada;
+          if (res.message == "sucess") {
+            const entrada = document.getElementById("entrada");
+            if (entrada) {
+              (entrada as HTMLInputElement).value = res.entrada;
+            }
+            const almoco = document.getElementById("almoco");
+            if (almoco) {
+              (almoco as HTMLInputElement).value = res.almoco;
+            }
+            const volta = document.getElementById("volta");
+            if (volta) {
+              (volta as HTMLInputElement).value = res.volta;
+            }
+            const saida = document.getElementById("saida");
+            if (saida) {
+              (saida as HTMLInputElement).value = res.saida;
+            }
+            const sub = document.getElementById("sub");
+            if (sub) {
+              sub.textContent = "Update";
+            }
           }
-          const almoco = document.getElementById("almoco");
-          if (almoco) {
-            (almoco as HTMLInputElement).value = res.almoco;
-          }
-          const volta = document.getElementById("volta");
-          if (volta) {
-            (volta as HTMLInputElement).value = res.volta;
-          }
-          const saida = document.getElementById("saida");
-          if (saida) {
-            (saida as HTMLInputElement).value = res.saida;
-          }
-          const sub = document.getElementById("sub");
-          if (sub) {
-            sub.textContent = "Update";
-          }
+          
         });
         
       }

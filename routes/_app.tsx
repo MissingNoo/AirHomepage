@@ -1,9 +1,11 @@
 import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import VtuberList from "../components/VtuberList.tsx";
+
 export default define.page(function App({ Component }) {
   return (
     <html>
+      <script src="/scripts.js"></script>
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

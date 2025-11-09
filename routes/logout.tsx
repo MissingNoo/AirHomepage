@@ -1,18 +1,18 @@
-import { define, sha256 } from "../utils.ts";
+import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
-import LoginForm from "../islands/LoginForm.tsx";
+import LogoutReload from "../islands/LogoutReload.tsx";
 
 export default define.page(() => {
   // Only render the new content
   return (
     <Partial name="docs-content">
-      <LoginForm></LoginForm>
+      <LogoutReload></LogoutReload>
     </Partial>
   );
 });
 
 export const handler = define.handlers({
-  async GET(ctx) {
+  POST(ctx) {
     const headers = ctx.req.headers;
     headers.set("location", "/");
     headers.append("set-cookie", "loggedin=false");

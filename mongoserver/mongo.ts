@@ -94,6 +94,7 @@ export async function add_hours(data: BHAdd) {
   }
 }
 
+// deno-lint-ignore no-explicit-any
 export async function get_day(data:any) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
@@ -102,6 +103,8 @@ export async function get_day(data:any) {
   const info = db.collection<BH>(user.id.toString());
   return await info.findOne({year:data.year, month: data.month, day: data.day})
 }
+
+
 
 export async function update_hours(uuid: string) {
   const db: Db = connect_db();

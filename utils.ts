@@ -3,6 +3,7 @@ import { createDefine, PageProps } from "fresh";
 import { RenderableProps } from "preact";
 import { encodeHex } from "jsr:@std/encoding@^1.0.10/hex";
 import { Signal } from "@preact/signals";
+import { db_port } from "./settings.ts";
 // This specifies the type of "ctx.state" which is used to share
 // data among middlewares, layouts and routes.
 export interface State {
@@ -37,7 +38,7 @@ export async function sha256(input: string) {
 }
 
 // deno-lint-ignore no-explicit-any
-export async function fetch_data(j: any, url: string = "http://127.0.0.1:8000") {
+export async function fetch_data(j: any, url: string = "http://127.0.0.1:" + db_port.toString()) {
   try {
     const response = await fetch(url, {
       body: JSON.stringify(j),
@@ -49,4 +50,17 @@ export async function fetch_data(j: any, url: string = "http://127.0.0.1:8000") 
   } catch (error: any) {
     console.error(error.message);
   }
+}
+
+export function go_home() {
+  setTimeout(function() { 
+    location.replace("/");
+  }, 100);
+  setTimeout(function() { 
+    location.reload(); 
+  }, 300);
+}
+
+export function reload() {
+  setTimeout(function() { location.reload(); }, 100);
 }

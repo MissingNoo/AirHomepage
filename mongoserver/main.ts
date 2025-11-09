@@ -1,5 +1,6 @@
 import { add_hours, update_hours, verify_login, get_day} from "./mongo.ts";
 import { getkey } from "./redis.ts";
+import {db_port} from "../settings.ts";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
@@ -77,4 +78,4 @@ async function handler(request: Request): Promise<Response> {
   }
 }
 
-Deno.serve(handler);
+Deno.serve({port:db_port}, handler);
