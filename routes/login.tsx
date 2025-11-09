@@ -27,6 +27,7 @@ export const handler = define.handlers({
     const id = data.id;
 
     if (uuid != "") {
+      console.log(data);
       headers.set("location", "/");
       headers.append("set-cookie", "loggedin=true");
       headers.append("set-cookie", "uuid=" + uuid.toString());
