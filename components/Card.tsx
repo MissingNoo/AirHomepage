@@ -9,7 +9,7 @@ export function Card(props: Props) {
   return (
     <div className="m-2 card bg-base-300 shadow-sm h-100">
       <figure>
-        <img class="object-contain" src={props.image} alt="Album" />
+        <img class="p-2 object-contain" src={props.image} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{props.text}</h2>
