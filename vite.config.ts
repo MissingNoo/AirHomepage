@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [fresh(), tailwindcss()],
   server: {
     allowedHosts: ["bh.337494.xyz"],
+    port : 5173
   },
 });
