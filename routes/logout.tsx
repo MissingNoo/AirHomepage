@@ -16,7 +16,6 @@ export const handler = define.handlers({
     const headers = new Headers();
     headers.set("location", "/");
     headers.append("set-cookie", "loggedin=false");
-    headers.append("set-cookie", "hash=");
     return new Response(null, {
       status: 303, // See Other
       headers,

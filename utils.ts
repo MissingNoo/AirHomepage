@@ -58,10 +58,10 @@ export async function fetch_data(
 export function go_home() {
   setTimeout(function () {
     location.replace("/");
-  }, 100);
+  }, 500);
   setTimeout(function () {
     location.reload();
-  }, 300);
+  }, 1000);
 }
 
 export function reload() {
