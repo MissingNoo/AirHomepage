@@ -13,6 +13,7 @@ export function Modal(props: ModalProps) {
         id={props.button_id}
         class="btn"
         onClick={() => {
+          alert("test");
           const modal = props.modal_id
             ? document.getElementById(props.modal_id)
             : null;

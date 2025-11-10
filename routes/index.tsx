@@ -1,4 +1,4 @@
-import { Head, IS_BROWSER } from "fresh/runtime";
+import { Head } from "fresh/runtime";
 import { define } from "../utils.ts";
 import LoadHours from "../islands/LoadHours.tsx";
 

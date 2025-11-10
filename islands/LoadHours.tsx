@@ -1,7 +1,4 @@
 import { useEffect } from "preact/hooks";
-import { totalhours } from "../signals.ts";
-import { cid } from "../signals.ts";
-import { fetch_data } from "../utils.ts";
 interface props {
   loggedin: boolean;
   hours: string;
