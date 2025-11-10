@@ -1,6 +1,6 @@
 import { App, staticFiles } from "fresh";
 import { fetch_data, getCookie, type State } from "./utils.ts";
-import { loggedin, cid } from "./signals.ts";
+import { cid, loggedin } from "./signals.ts";
 export const app = new App<State>();
 
 app.use(staticFiles());

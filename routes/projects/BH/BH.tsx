@@ -39,7 +39,7 @@ export const handler = define.handlers({
     const headers = new Headers();
     const res = await fetch_data(j);
     //console.log(res);
-    
+
     if (res.message == "Invalid") {
       headers.set("location", ctx.route + "?error=true");
     } else {

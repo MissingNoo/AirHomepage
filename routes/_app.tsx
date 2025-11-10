@@ -1,7 +1,7 @@
 import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import VtuberList from "../components/VtuberList.tsx";
-import {TotalHours} from "../components/TotalHours.tsx";
+import { TotalHours } from "../components/TotalHours.tsx";
 import { LoginButton } from "../components/LoginButton.tsx";
 import { LogoutButton } from "../components/LogoutButton.tsx";
 export default define.page(function App({ Component }) {

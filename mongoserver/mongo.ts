@@ -18,8 +18,7 @@ interface LoginData {
 }
 const client = new MongoClient("mongodb://127.0.0.1:27017");
 client.connect();
-function connect_db() {  
-  
+function connect_db() {
   const db = client.db("BH");
   return db;
 }
@@ -39,7 +38,7 @@ export async function verify_login(username: string, password: string) {
     }
   }
   client.close();
-  return { message: "Invalid username" };  
+  return { message: "Invalid username" };
 }
 
 interface BHold {

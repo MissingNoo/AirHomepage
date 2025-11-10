@@ -8,26 +8,20 @@ interface props {
 }
 
 export default function LoadHours(props: props) {
-  let ended = true;
-  if (ended) {    
-    // deno-lint-ignore react-rules-of-hooks
-    useEffect(() => {
-      const hide_timer = setInterval(() => {
-        const h = document.getElementById("hours");
-        if (h) {
-          if (props.loggedin) {
-            h.textContent = " " + props.hours + " Hours in bank ";
-          } else {
-            alert("")
-            h.style = "display:none";
-          }
+  useEffect(() => {
+    const hide_timer = setInterval(() => {
+      const h = document.getElementById("hours");
+      if (h) {
+        if (props.loggedin) {
+          h.textContent = " " + props.hours + " Hours in bank ";
+        } else {
+          h.style = "display:none";
         }
-        ended = false;
-        clearInterval(hide_timer);
-        return () => clearInterval(hide_timer);
-      });
+      }
+      clearInterval(hide_timer);
+      return () => clearInterval(hide_timer);
     });
-  }
+  });
 
   return (
     ""
