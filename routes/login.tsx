@@ -25,7 +25,7 @@ export const handler = define.handlers({
     const data = await fetch_data(j);
 
     if (data.message == "sucess") {
-      //console.log(data);
+      console.log(data);
       headers.set("location", "/");
       headers.append("set-cookie", "loggedin=true");
       headers.append("set-cookie", "uuid=" + data.uuid.toString());
@@ -33,7 +33,7 @@ export const handler = define.handlers({
     }
 
     return new Response(null, {
-      status: 303, // See Other
+      status: 200,
       headers,
     });
   },
