@@ -15,7 +15,7 @@ export default define.page(() => {
         </Card>
         <Card
           image="pfp.png"
-          link="/projects/BH"
+          link="/projects/BH/BH"
           text="Banco de Hora"
           subtext="Calculadora de horas trabalhadas"
         >

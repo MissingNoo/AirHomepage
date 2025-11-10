@@ -1,7 +1,9 @@
 import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import VtuberList from "../components/VtuberList.tsx";
-
+import {TotalHours} from "../components/TotalHours.tsx";
+import { LoginButton } from "../components/LoginButton.tsx";
+import { LogoutButton } from "../components/LogoutButton.tsx";
 export default define.page(function App({ Component }) {
   return (
     <html>
@@ -49,10 +51,10 @@ export default define.page(function App({ Component }) {
                   <a href="/test" f-partial="/test">Test</a>
                 </li>
                 <li>
-                  <a id="loginbt" href="/login" f-partial="/login">Login</a>
+                  <LoginButton></LoginButton>
                 </li>
                 <li>
-                  <a id="logoutbt" href="/logout" f-partial="/logout">Logout</a>
+                  <LogoutButton></LogoutButton>
                 </li>
               </ul>
             </li>
@@ -83,11 +85,8 @@ export default define.page(function App({ Component }) {
               </label>
               <ul className="menu bg-base-200 min-h-full flex p-4">
                 {/* Sidebar content here */}
-                <li
-                  className="bg-base-100 rounded-box shadow-md self-center m-5 p-7"
-                  id="hours"
-                >
-                  Hours
+                <li>
+                  <TotalHours></TotalHours>
                 </li>
                 <li>
                   <VtuberList></VtuberList>

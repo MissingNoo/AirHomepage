@@ -1,9 +1,18 @@
-import BHInsert from "../../islands/BHInsert.tsx";
-import { define } from "../../utils.ts";
+import BHInsert from "../../../islands/BHInsert.tsx";
+import { define } from "../../../utils.ts";
 import { Partial } from "fresh/runtime";
-import { fetch_data, getCookie } from "../../utils.ts";
-import HideLoginBtn from "../../islands/HideLoginBtn.tsx";
+import { fetch_data, getCookie } from "../../../utils.ts";
+import LoadHours from "../../../islands/LoadHours.tsx";
+import { totalhours } from "../../../signals.ts";
 export const handler = define.handlers({
+  /*async GET(ctx) {
+    const data = await fetch_data({ type: "get_hours", id: ctx.state.id });
+    try {
+      ctx.state.hours = data.hours;
+    } catch (_error) {
+      ctx.state.hours = "?";
+    }
+  },*/
   async POST(ctx) {
     if (!ctx.state.logged_in) {
       return new Response(null, {
@@ -30,10 +39,11 @@ export const handler = define.handlers({
     const headers = new Headers();
     const res = await fetch_data(j);
     //console.log(res);
+    
     if (res.message == "Invalid") {
       headers.set("location", ctx.route + "?error=true");
     } else {
-      headers.set("location", "/projects/BH");
+      headers.set("location", "/projects/BH/BH");
     }
 
     return new Response(null, {
@@ -59,8 +69,8 @@ export default define.page((ctx) => {
           loggedin={ctx.state.logged_in}
         >
         </BHInsert>
-        <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
-        </HideLoginBtn>
+        <LoadHours hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
+        </LoadHours>
       </div>
     </Partial>
   );

@@ -16,9 +16,10 @@ interface LoginData {
   base_minutes: number;
   totalhours: string;
 }
-function connect_db() {
-  const client = new MongoClient("mongodb://127.0.0.1:27017");
-  client.connect();
+const client = new MongoClient("mongodb://127.0.0.1:27017");
+client.connect();
+function connect_db() {  
+  
   const db = client.db("BH");
   return db;
 }
@@ -37,7 +38,8 @@ export async function verify_login(username: string, password: string) {
       return { message: "Invalid password" };
     }
   }
-  return { message: "Invalid username" };
+  client.close();
+  return { message: "Invalid username" };  
 }
 
 interface BHold {

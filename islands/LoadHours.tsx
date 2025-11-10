@@ -1,33 +1,29 @@
 import { useEffect } from "preact/hooks";
+import { totalhours } from "../signals.ts";
+import { cid } from "../signals.ts";
+import { fetch_data } from "../utils.ts";
 interface props {
   loggedin: boolean;
   hours: string;
 }
 
-export default function HideLoginBtn(props: props) {
+export default function LoadHours(props: props) {
   let ended = true;
-  if (ended) {
+  if (ended) {    
     // deno-lint-ignore react-rules-of-hooks
     useEffect(() => {
       const hide_timer = setInterval(() => {
-        const l = document.getElementById("loginbt");
-        const lo = document.getElementById("logoutbt");
-        if (l && props.loggedin) {
-          l.style.display = "none";
-        }
-        if (lo && !props.loggedin) {
-          lo.style.display = "none";
-        }
         const h = document.getElementById("hours");
         if (h) {
           if (props.loggedin) {
             h.textContent = " " + props.hours + " Hours in bank ";
           } else {
+            alert("")
             h.style = "display:none";
           }
-          //h.className = "btn"
         }
         ended = false;
+        clearInterval(hide_timer);
         return () => clearInterval(hide_timer);
       });
     });

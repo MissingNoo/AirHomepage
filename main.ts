@@ -1,14 +1,17 @@
 import { App, staticFiles } from "fresh";
 import { fetch_data, getCookie, type State } from "./utils.ts";
+import { loggedin, cid } from "./signals.ts";
 export const app = new App<State>();
 
 app.use(staticFiles());
 
 // Pass a shared value from a middleware
 app.use(async (ctx) => {
-  ctx.state.logged_in = await getCookie(ctx, "loggedin") == "true";
-  ctx.state.id = await getCookie(ctx, "id") ?? "";
-  ctx.state.uuid = await getCookie(ctx, "uuid") ?? "";
+  ctx.state.logged_in = getCookie(ctx, "loggedin") == "true";
+  loggedin.value = ctx.state.logged_in;
+  ctx.state.id = getCookie(ctx, "id") ?? "";
+  cid.value = ctx.state.id;
+  ctx.state.uuid = getCookie(ctx, "uuid") ?? "";
   const data = await fetch_data({ type: "get_hours", id: ctx.state.id });
   try {
     ctx.state.hours = data.hours;
