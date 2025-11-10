@@ -27,12 +27,12 @@ export const handler = define.handlers({
       saida,
       uuid,
     };
-    const headers = new Headers;
+    const headers = new Headers();
     const res = await fetch_data(j);
     //console.log(res);
     if (res.message == "Invalid") {
       headers.set("location", ctx.route + "?error=true");
-    } else { 
+    } else {
       headers.set("location", "/projects/BH");
     }
 
@@ -53,9 +53,14 @@ export default define.page((ctx) => {
   return (
     <Partial name="docs-content">
       <div>
-        <BHInsert uuid={ctx.state.uuid} message={message} loggedin={ctx.state.logged_in}>
+        <BHInsert
+          uuid={ctx.state.uuid}
+          message={message}
+          loggedin={ctx.state.logged_in}
+        >
         </BHInsert>
-        <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}></HideLoginBtn>
+        <HideLoginBtn hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
+        </HideLoginBtn>
       </div>
     </Partial>
   );

@@ -13,7 +13,7 @@ export default function LogoutReload() {
     } catch (error: any) {
       console.error(error.message);
     }
-  })
+  });
   if (!IS_BROWSER) return <div></div>;
   return (
     <div>

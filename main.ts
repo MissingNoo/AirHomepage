@@ -15,17 +15,23 @@ app.use(async (ctx) => {
   } catch (_error) {
     ctx.state.hours = "?";
   }
-  
+
   return await ctx.next();
 });
 
 app.post("/api/get-day", async (ctx) => {
   const d = await fetch_data(await ctx.req.json());
   // deno-lint-ignore no-explicit-any
-  let res:any = {message: "no data"};
+  let res: any = { message: "no data" };
   let status = 404;
   try {
-    res = { message:"sucess", entrada: d.entrada, almoco : d.almoco, volta : d.volta, saida: d.saida};
+    res = {
+      message: "sucess",
+      entrada: d.entrada,
+      almoco: d.almoco,
+      volta: d.volta,
+      saida: d.saida,
+    };
     status = 200;
   } catch (_error) {
     //

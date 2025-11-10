@@ -4,6 +4,7 @@
     "jsr:@iuioiua/redis@^1.1.9": "1.1.9",
     "jsr:@std/assert@1": "1.0.15",
     "jsr:@std/internal@^1.0.12": "1.0.12",
+    "npm:bcrypt@6": "6.0.0",
     "npm:moment@^2.30.1": "2.30.1",
     "npm:mongodb@7": "7.0.0"
   },
@@ -37,6 +38,14 @@
         "@types/webidl-conversions"
       ]
     },
+    "bcrypt@6.0.0": {
+      "integrity": "sha512-cU8v/EGSrnH+HnxV2z0J7/blxH8gq7Xh2JFT6Aroax7UohdmiJJlxApMxtKfuI7z68NvvVcmR78k2LbT6efhRg==",
+      "dependencies": [
+        "node-addon-api",
+        "node-gyp-build"
+      ],
+      "scripts": true
+    },
     "bson@7.0.0": {
       "integrity": "sha512-Kwc6Wh4lQ5OmkqqKhYGKIuELXl+EPYSCObVE6bWsp1T/cGkOCBN0I8wF/T44BiuhHyNi1mmKVPXk60d41xZ7kw=="
     },
@@ -60,6 +69,13 @@
         "bson",
         "mongodb-connection-string-url"
       ]
+    },
+    "node-addon-api@8.5.0": {
+      "integrity": "sha512-/bRZty2mXUIFY/xU5HLvveNHlswNJej+RnxBjOMkidWfwZzgTbPG1E3K5TOxRLOR+5hX7bSofy8yf1hZevMS8A=="
+    },
+    "node-gyp-build@4.8.4": {
+      "integrity": "sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==",
+      "bin": true
     },
     "punycode@2.3.1": {
       "integrity": "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg=="
@@ -95,6 +111,7 @@
     "dependencies": [
       "jsr:@iuioiua/redis@^1.1.9",
       "jsr:@std/assert@1",
+      "npm:bcrypt@6",
       "npm:moment@^2.30.1",
       "npm:mongodb@7"
     ]

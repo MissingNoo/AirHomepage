@@ -38,7 +38,10 @@ export async function sha256(input: string) {
 }
 
 // deno-lint-ignore no-explicit-any
-export async function fetch_data(j: any, url: string = "http://127.0.0.1:" + db_port.toString()) {
+export async function fetch_data(
+  j: any,
+  url: string = "http://127.0.0.1:" + db_port.toString(),
+) {
   try {
     const response = await fetch(url, {
       body: JSON.stringify(j),
@@ -53,14 +56,16 @@ export async function fetch_data(j: any, url: string = "http://127.0.0.1:" + db_
 }
 
 export function go_home() {
-  setTimeout(function() { 
+  setTimeout(function () {
     location.replace("/");
   }, 100);
-  setTimeout(function() { 
-    location.reload(); 
+  setTimeout(function () {
+    location.reload();
   }, 300);
 }
 
 export function reload() {
-  setTimeout(function() { location.reload(); }, 100);
+  setTimeout(function () {
+    location.reload();
+  }, 100);
 }

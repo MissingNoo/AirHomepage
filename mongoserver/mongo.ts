@@ -1,6 +1,7 @@
 import { Db, MongoClient } from "mongodb";
 import { setkey } from "./redis.ts";
 import holidays from "./holidays.json" with { type: "json" };
+import { compare, hash } from "bcrypt";
 
 type Holidays = { [key: string]: string };
 const typedHolidays: Holidays = holidays;
@@ -23,15 +24,20 @@ function connect_db() {
 }
 
 export async function verify_login(username: string, password: string) {
+  /*hash("33d74eef94", 10, (err, res) => {
+    console.log(res);
+  })*/
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ username: username });
-  if (user?.password == password) {
-    return { uuid: user.uuid, id: user.id };
-  } else {
-    return "";
+  if (user) {
+    if (await compare(password, user.password)) {
+      return { message: "sucess", uuid: user.uuid, id: user.id };
+    } else {
+      return { message: "Invalid password" };
+    }
   }
-  //UUID.generate();
+  return { message: "Invalid username" };
 }
 
 interface BHold {
@@ -95,16 +101,18 @@ export async function add_hours(data: BHAdd) {
 }
 
 // deno-lint-ignore no-explicit-any
-export async function get_day(data:any) {
+export async function get_day(data: any) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ uuid: data.uuid });
   if (!user) throw new Error("User not found!");
   const info = db.collection<BH>(user.id.toString());
-  return await info.findOne({year:data.year, month: data.month, day: data.day})
+  return await info.findOne({
+    year: data.year,
+    month: data.month,
+    day: data.day,
+  });
 }
-
-
 
 export async function update_hours(uuid: string) {
   const db: Db = connect_db();

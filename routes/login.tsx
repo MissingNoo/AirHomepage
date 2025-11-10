@@ -15,23 +15,21 @@ export const handler = define.handlers({
   async POST(ctx) {
     const form = await ctx.req.formData();
     const username = form.get("username")?.toString() ?? "";
-    const password = await sha256(form.get("password")?.toString() ?? "");
-    const headers = new Headers;
+    const password = form.get("password")?.toString() ?? "";
+    const headers = new Headers();
     const j = {
       type: "login",
       username,
       password,
     };
     const data = await fetch_data(j);
-    const uuid = data.uuid;
-    const id = data.id;
 
-    if (uuid != "") {
+    if (data.message == "sucess") {
       console.log(data);
       headers.set("location", "/");
       headers.append("set-cookie", "loggedin=true");
-      headers.append("set-cookie", "uuid=" + uuid.toString());
-      headers.append("set-cookie", "id=" + id.toString());
+      headers.append("set-cookie", "uuid=" + data.uuid.toString());
+      headers.append("set-cookie", "id=" + data.id.toString());
     }
 
     return new Response(null, {
