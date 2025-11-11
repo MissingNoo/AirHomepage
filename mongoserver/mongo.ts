@@ -135,10 +135,10 @@ export async function get_day(data: any) {
   });
 }
 
-export async function get_hours(data: any) {
+export async function get_hours(id: number) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
-  const user = await users.findOne({ uuid: data.uuid });
+  const user = await users.findOne({ id: id });
   if (!user) throw new Error("User not found!");
   return user.totalhours;
 }

@@ -5,7 +5,9 @@ async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
       const data = await request.json(); // Assuming JSON body
-      //console.log(data);
+      if (Deno.args[0] == "--debug") {
+        console.log(data);
+      }      
       switch (data.type) {
         case "login": {
           /*hash(data.password, 10, (_err:any, hash:string) => {
@@ -47,7 +49,7 @@ async function handler(request: Request): Promise<Response> {
         }
 
         case "get_hours": {
-          const hours: string = await get_hours(data.uuid) ?? "00:00";
+          const hours: string = await get_hours(parseInt(data.id)) ?? "00:00";
           return new Response(JSON.stringify({ hours: hours }), {
             headers: { "Content-Type": "application/json" },
             status: 200,
