@@ -7,6 +7,7 @@ type Holidays = { [key: string]: string };
 const typedHolidays: Holidays = holidays;
 // deno-lint-ignore no-import-prefix
 import moment from "https://deno.land/x/momentjs@2.29.1-deno/mod.ts";
+import { debug } from "./main.ts";
 interface LoginData {
   id: number;
   username: string;
@@ -139,6 +140,9 @@ export async function get_hours(id: number) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ id: id });
+  if (debug) {
+    console.log(user);
+  }
   if (!user) throw new Error("User not found!");
   return user.totalhours;
 }

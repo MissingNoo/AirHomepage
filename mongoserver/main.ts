@@ -1,11 +1,12 @@
 import { get_hours, add_hours, get_day, register_user, update_hours, verify_login } from "./mongo.ts";
 import { getkey } from "./redis.ts";
 import { db_port } from "../settings.ts";
+export const debug = Deno.args[0] == "--debug";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
       const data = await request.json(); // Assuming JSON body
-      if (Deno.args[0] == "--debug") {
+      if (debug) {
         console.log(data);
       }      
       switch (data.type) {
