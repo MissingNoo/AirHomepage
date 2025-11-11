@@ -1,4 +1,4 @@
-import { Db, MongoClient } from "mongodb";
+import { Db, MongoClient, UUID } from "mongodb";
 import { setkey } from "./redis.ts";
 import holidays from "./holidays.json" with { type: "json" };
 import { compare, hash } from "bcrypt";
@@ -23,6 +23,27 @@ function connect_db() {
   return db;
 }
 
+export async function register_user(username: string, password: string, idd:number) {
+  const db: Db = connect_db();
+  const users = db.collection<LoginData>("users");
+  const user = await users.findOne({ username: username });
+  const userbyidd = await users.findOne({ id : idd });
+  if (!user && !userbyidd) {
+    const pwd = await hash(password, 10);
+    users.insertOne({
+      id : idd,
+      base_hours : 0,
+      base_minutes : 0,
+      password : pwd.toString(),
+      totalhours : "",
+      username : username,
+      uuid : crypto.randomUUID()
+    })
+    return {message : "Registered"}
+  }
+  return { message: "Username exists" };
+}
+
 export async function verify_login(username: string, password: string) {
   /*hash("33d74eef94", 10, (err, res) => {
     console.log(res);
@@ -37,7 +58,6 @@ export async function verify_login(username: string, password: string) {
       return { message: "Invalid password" };
     }
   }
-  client.close();
   return { message: "Invalid username" };
 }
 

@@ -4,6 +4,7 @@ import VtuberList from "../components/VtuberList.tsx";
 import { TotalHours } from "../components/TotalHours.tsx";
 import { LoginButton } from "../components/LoginButton.tsx";
 import { LogoutButton } from "../components/LogoutButton.tsx";
+import { RegisterButton } from "../components/RegisterButton.tsx";
 export default define.page(function App({ Component }) {
   return (
     <html>
@@ -55,6 +56,9 @@ export default define.page(function App({ Component }) {
                 </li>
                 <li>
                   <LogoutButton></LogoutButton>
+                </li>
+                <li>
+                  <RegisterButton></RegisterButton>
                 </li>
               </ul>
             </li>

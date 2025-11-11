@@ -1,12 +1,11 @@
-import { define, fetch_data, sha256 } from "../utils.ts";
+import { define, fetch_data } from "../utils.ts";
 import { Partial } from "fresh/runtime";
-import LoginForm from "../islands/LoginForm.tsx";
-
-export default define.page(() => {
+import RegisterForm from "../islands/RegisterForm.tsx"
+export default define.page(async (ctx) => {
   // Only render the new content
   return (
     <Partial name="docs-content">
-      <LoginForm></LoginForm>
+      <RegisterForm></RegisterForm>
     </Partial>
   );
 });
@@ -16,11 +15,13 @@ export const handler = define.handlers({
     const form = await ctx.req.formData();
     const username = form.get("username")?.toString() ?? "";
     const password = form.get("password")?.toString() ?? "";
+    const idd = form.get("idd")?.toString() ?? "";
     const headers = new Headers();
     const j = {
-      type: "login",
+      type: "register",
       username,
       password,
+      idd
     };
     const data = await fetch_data(j);
 

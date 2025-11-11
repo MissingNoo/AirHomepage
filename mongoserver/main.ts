@@ -1,6 +1,7 @@
-import { add_hours, get_day, update_hours, verify_login } from "./mongo.ts";
+import { add_hours, get_day, register_user, update_hours, verify_login } from "./mongo.ts";
 import { getkey } from "./redis.ts";
 import { db_port } from "../settings.ts";
+import { hash } from "bcrypt";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
@@ -12,6 +13,16 @@ async function handler(request: Request): Promise<Response> {
             console.log("hash: " + hash)
           })*/
           //console.log("Received POST data:", data);
+          const res = await verify_login(data.username, data.password);
+          return new Response(JSON.stringify(res), {
+            headers: { "Content-Type": "application/json" },
+            status: 200,
+          });
+        }
+
+        case "register": {
+          //console.log("Received POST data:", data);
+          await register_user(data.username, data.password, data.idd);
           const res = await verify_login(data.username, data.password);
           return new Response(JSON.stringify(res), {
             headers: { "Content-Type": "application/json" },
