@@ -1,7 +1,6 @@
-import { add_hours, get_day, register_user, update_hours, verify_login } from "./mongo.ts";
+import { get_hours, add_hours, get_day, register_user, update_hours, verify_login } from "./mongo.ts";
 import { getkey } from "./redis.ts";
 import { db_port } from "../settings.ts";
-import { hash } from "bcrypt";
 async function handler(request: Request): Promise<Response> {
   if (request.method === "POST") {
     try {
@@ -48,7 +47,7 @@ async function handler(request: Request): Promise<Response> {
         }
 
         case "get_hours": {
-          const hours: string = await getkey(data.id) ?? "00:00";
+          const hours: string = await get_hours(data.uuid) ?? "00:00";
           return new Response(JSON.stringify({ hours: hours }), {
             headers: { "Content-Type": "application/json" },
             status: 200,

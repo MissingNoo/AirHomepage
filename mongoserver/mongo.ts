@@ -135,6 +135,14 @@ export async function get_day(data: any) {
   });
 }
 
+export async function get_hours(data: any) {
+  const db: Db = connect_db();
+  const users = db.collection<LoginData>("users");
+  const user = await users.findOne({ uuid: data.uuid });
+  if (!user) throw new Error("User not found!");
+  return user.totalhours;
+}
+
 export async function update_hours(uuid: string) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
@@ -277,7 +285,8 @@ export async function update_hours(uuid: string) {
   const minutesstring = (totalminutes < 10 ? "0" : "") +
     totalminutes.toString();
   console.log("total: " + hourstring + ":" + minutesstring);
-  setkey(user.id.toString(), hourstring + ":" + minutesstring);
+  users.updateOne({id : user.id}, {$set : {totalhours: hourstring + ":" + minutesstring}})
+  //setkey(user.id.toString(), hourstring + ":" + minutesstring);
 }
 
 async function _migration(uuid: string) {
