@@ -24,30 +24,40 @@ function connect_db() {
   return db;
 }
 
-export async function register_user(username: string, password: string, idd:number) {
+function log(msg: string) {
+  if (debug) {
+    console.log(msg);
+  }
+}
+
+export async function register_user(
+  username: string,
+  password: string,
+  idd: number,
+) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ username: username });
-  const userbyidd = await users.findOne({ id : idd });
+  const userbyidd = await users.findOne({ id: idd });
   if (!user && !userbyidd) {
     const pwd = await hash(password, 10);
     users.insertOne({
-      id : idd,
-      base_hours : 0,
-      base_minutes : 0,
-      password : pwd.toString(),
-      totalhours : "",
-      username : username,
-      uuid : crypto.randomUUID()
-    })
-    return {message : "Registered"}
+      id: idd,
+      base_hours: 0,
+      base_minutes: 0,
+      password: pwd.toString(),
+      totalhours: "",
+      username: username,
+      uuid: crypto.randomUUID(),
+    });
+    return { message: "Registered" };
   }
   return { message: "Username exists" };
 }
 
 export async function verify_login(username: string, password: string) {
   /*hash("33d74eef94", 10, (err, res) => {
-    console.log(res);
+    log(res);
   })*/
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
@@ -141,7 +151,7 @@ export async function get_hours(id: number) {
   const users = db.collection<LoginData>("users");
   const user = await users.findOne({ id: id });
   if (debug) {
-    console.log(user);
+    log(user);
   }
   if (!user) throw new Error("User not found!");
   return user.totalhours;
@@ -172,7 +182,7 @@ export async function update_hours(uuid: string) {
         if (today && today.is_reset) {
           totalhours = 0;
           totalminutes = 0;
-          console.log("[" + month + "/" + day + "] RESET");
+          log("[" + month + "/" + day + "] RESET");
         }
         if (today && !today.is_reset) {
           const is_sunday = moment.utc(
@@ -210,7 +220,7 @@ export async function update_hours(uuid: string) {
 
                         hours = parseInt(extra[0]);
                         minutes = parseInt(extra[1]);
-                        console.log("extra [" + month + "/" + day + "] " + extra);*/
+                        log("extra [" + month + "/" + day + "] " + extra);*/
           if (!bh) {
             hours -= 7;
             minutes -= 20;
@@ -229,7 +239,7 @@ export async function update_hours(uuid: string) {
           if (!holiday) {
             if (!bh) {
               if (is_sunday) {
-                console.log("[" + month + "/" + day + "] Sunday");
+                log("[" + month + "/" + day + "] Sunday");
               }
               if (!is_sunday) {
                 totalhours += hours;
@@ -247,7 +257,7 @@ export async function update_hours(uuid: string) {
                   totalhours.toString();
                 const minutesstring = (totalminutes < 10 ? "0" : "") +
                   totalminutes.toString();
-                console.log(
+                log(
                   "[" + month + "/" + day + "] + (" +
                     (hours < 10 ? "0" + hours : hours) + ":" +
                     (minutes < 10 ? "0" + minutes : minutes) + ") " +
@@ -273,13 +283,13 @@ export async function update_hours(uuid: string) {
                 totalhours.toString();
               const minutesstring = (totalminutes < 10 ? "0" : "") +
                 totalminutes.toString();
-              console.log(
+              log(
                 "[" + month + "/" + day + "] - (" + bh_time[0] + ":" +
                   bh_time[1] + ") " + hourstring + ":" + minutesstring,
               );
             }
           } else {
-            console.log("[" + month + "/" + day + "] Holiday");
+            log("[" + month + "/" + day + "] Holiday");
           }
         }
       }
@@ -288,8 +298,10 @@ export async function update_hours(uuid: string) {
   const hourstring = (totalhours < 10 ? "0" : "") + totalhours.toString();
   const minutesstring = (totalminutes < 10 ? "0" : "") +
     totalminutes.toString();
-  console.log("total: " + hourstring + ":" + minutesstring);
-  users.updateOne({id : user.id}, {$set : {totalhours: hourstring + ":" + minutesstring}})
+  log("total: " + hourstring + ":" + minutesstring);
+  users.updateOne({ id: user.id }, {
+    $set: { totalhours: hourstring + ":" + minutesstring },
+  });
   //setkey(user.id.toString(), hourstring + ":" + minutesstring);
 }
 
@@ -346,7 +358,7 @@ async function _migration(uuid: string) {
         day,
       });
       if (reset) {
-        console.log(reset);
+        log(reset);
       }
       if (ported === null && entrada && saida) {
         info.insertOne({

@@ -27,9 +27,19 @@ export const handler = define.handlers({
     if (data.message == "sucess") {
       console.log(data);
       headers.set("location", "/");
-      headers.append("set-cookie", "loggedin=true" + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
-      headers.append("set-cookie", "uuid=" + data.uuid.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
-      headers.append("set-cookie", "id=" + data.id.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
+      headers.append(
+        "set-cookie",
+        "loggedin=true" + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
+      headers.append(
+        "set-cookie",
+        "uuid=" + data.uuid.toString() +
+          ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
+      headers.append(
+        "set-cookie",
+        "id=" + data.id.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
     }
 
     return new Response(null, {

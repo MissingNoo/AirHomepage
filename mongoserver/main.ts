@@ -1,4 +1,11 @@
-import { get_hours, add_hours, get_day, register_user, update_hours, verify_login } from "./mongo.ts";
+import {
+  add_hours,
+  get_day,
+  get_hours,
+  register_user,
+  update_hours,
+  verify_login,
+} from "./mongo.ts";
 import { getkey } from "./redis.ts";
 import { db_port } from "../settings.ts";
 export const debug = Deno.args[0] == "--debug";
@@ -8,7 +15,7 @@ async function handler(request: Request): Promise<Response> {
       const data = await request.json(); // Assuming JSON body
       if (debug) {
         console.log(data);
-      }      
+      }
       switch (data.type) {
         case "login": {
           /*hash(data.password, 10, (_err:any, hash:string) => {

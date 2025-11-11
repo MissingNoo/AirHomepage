@@ -1,6 +1,6 @@
 import { define, fetch_data } from "../utils.ts";
 import { Partial } from "fresh/runtime";
-import RegisterForm from "../islands/RegisterForm.tsx"
+import RegisterForm from "../islands/RegisterForm.tsx";
 export default define.page(async (ctx) => {
   // Only render the new content
   return (
@@ -21,16 +21,26 @@ export const handler = define.handlers({
       type: "register",
       username,
       password,
-      idd
+      idd,
     };
     const data = await fetch_data(j);
 
     if (data.message == "sucess") {
       console.log(data);
       headers.set("location", "/");
-      headers.append("set-cookie", "loggedin=true" + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
-      headers.append("set-cookie", "uuid=" + data.uuid.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
-      headers.append("set-cookie", "id=" + data.id.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT");
+      headers.append(
+        "set-cookie",
+        "loggedin=true" + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
+      headers.append(
+        "set-cookie",
+        "uuid=" + data.uuid.toString() +
+          ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
+      headers.append(
+        "set-cookie",
+        "id=" + data.id.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
     }
 
     return new Response(null, {
