@@ -1,10 +1,7 @@
 import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import VtuberList from "../components/VtuberList.tsx";
-import { TotalHours } from "../components/TotalHours.tsx";
-import { LoginButton } from "../components/LoginButton.tsx";
-import { LogoutButton } from "../components/LogoutButton.tsx";
-import { RegisterButton } from "../components/RegisterButton.tsx";
+import { HomeMenu } from "../components/HomeMenu.tsx";
 export default define.page(function App({ Component }) {
   return (
     <html>
@@ -36,33 +33,7 @@ export default define.page(function App({ Component }) {
             <h1 class="text-4xl font-bold m-5">Airgeadlamh</h1>
           </div>
 
-          <ul className="items-center list bg-base-200">
-            <li>
-              <ul className="menu menu-vertical lg:menu-horizontal bg-base-200">
-                <li>
-                  <a href="/">Home</a>
-                </li>
-                <li>
-                  <a href="/projects">Projects</a>
-                </li>
-                <li>
-                  <a href="/about">About</a>
-                </li>
-                <li>
-                  <a href="/test" f-partial="/test">Test</a>
-                </li>
-                <li>
-                  <LoginButton></LoginButton>
-                </li>
-                <li>
-                  <LogoutButton></LogoutButton>
-                </li>
-                <li>
-                  <RegisterButton></RegisterButton>
-                </li>
-              </ul>
-            </li>
-          </ul>
+          <HomeMenu></HomeMenu>
         </div>
         {/*fresh-gradient*/}
         <div class="mx-auto min-h-screen">
@@ -89,9 +60,6 @@ export default define.page(function App({ Component }) {
               </label>
               <ul className="menu bg-base-200 min-h-full flex p-4">
                 {/* Sidebar content here */}
-                <li>
-                  <TotalHours></TotalHours>
-                </li>
                 <li>
                   <VtuberList></VtuberList>
                 </li>

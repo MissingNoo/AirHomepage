@@ -24,7 +24,7 @@ function connect_db() {
   return db;
 }
 
-function log(msg: string) {
+function log(msg: any) {
   if (debug) {
     console.log(msg);
   }
@@ -118,17 +118,33 @@ export async function add_hours(data: BHAdd) {
   const date = data.day.toString().split("-");
   //const already = info. //TODO: don't add if exists
   if (user) {
-    info.insertOne({
+    const filter = {
       id: user.id,
-      entrada: data.entrada,
-      almoco: data.almoco,
-      volta: data.volta,
-      saida: data.saida,
       day: parseInt(date[2]),
       month: parseInt(date[1]),
       year: parseInt(date[0]),
-      is_reset: false,
-    });
+    }
+    const existing_day = await info.findOne(filter);
+    if (existing_day) {
+      info.updateOne(filter, {$set : {
+        entrada: data.entrada,
+        almoco: data.almoco,
+        volta: data.volta,
+        saida: data.saida,
+      }});
+    } else {
+      info.insertOne({
+        id: user.id,
+        entrada: data.entrada,
+        almoco: data.almoco,
+        volta: data.volta,
+        saida: data.saida,
+        day: parseInt(date[2]),
+        month: parseInt(date[1]),
+        year: parseInt(date[0]),
+        is_reset: false,
+      });
+    }
   }
 }
 

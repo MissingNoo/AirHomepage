@@ -4,6 +4,7 @@ import { Partial } from "fresh/runtime";
 import { fetch_data, getCookie } from "../../../utils.ts";
 import LoadHours from "../../../islands/LoadHours.tsx";
 import { totalhours } from "../../../signals.ts";
+import { TotalHours } from "../../../components/TotalHours.tsx";
 export const handler = define.handlers({
   /*async GET(ctx) {
     const data = await fetch_data({ type: "get_hours", id: ctx.state.id });
@@ -62,7 +63,8 @@ export default define.page((ctx) => {
   //Only render the new content
   return (
     <Partial name="docs-content">
-      <div>
+      <div className="flex flex-col items-center">
+        <TotalHours></TotalHours>
         <BHInsert
           uuid={ctx.state.uuid}
           message={message}

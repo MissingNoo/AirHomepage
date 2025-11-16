@@ -54,7 +54,7 @@ export default function BHInsert(props: props) {
             }
             const sub = document.getElementById("sub");
             if (sub) {
-              sub.textContent = "Update";
+              sub.textContent = "Atualizar";
             }
           }
         });

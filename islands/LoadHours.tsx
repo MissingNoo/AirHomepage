@@ -10,7 +10,7 @@ export default function LoadHours(props: props) {
       const h = document.getElementById("hours");
       if (h) {
         if (props.loggedin) {
-          h.textContent = " " + props.hours + " Hours in bank ";
+          h.textContent = " " + props.hours + " Horas no banco";
         } else {
           h.style = "display:none";
         }
