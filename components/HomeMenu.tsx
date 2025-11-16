@@ -6,7 +6,7 @@ export function HomeMenu() {
   return (
     <ul className="items-center list">
       <li>
-        <ul className="menu menu-vertical lg:menu-horizontal bg-base-200">
+        <ul className="menu menu-horizontal bg-base-200">
           <li>
             <a href="/">Home</a>
           </li>

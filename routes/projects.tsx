@@ -6,18 +6,18 @@ export default define.page(() => {
   return (
     <Partial name="docs-content">
       <div class="m-2 flex not-lg:flex-col">
+      <Card
+          image=""
+          link="/projects/BH/BH"
+          text="Banco de Hora"
+          subtext="Calculadora de horas trabalhadas"
+        >
+        </Card>
         <Card
           image="Projects/VCure.png"
           link="/projects/vcure"
           text="VCure"
           subtext="Holocure clone"
-        >
-        </Card>
-        <Card
-          image=""
-          link="/projects/BH/BH"
-          text="Banco de Hora"
-          subtext="Calculadora de horas trabalhadas"
         >
         </Card>
       </div>

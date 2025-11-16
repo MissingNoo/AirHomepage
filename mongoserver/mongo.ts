@@ -145,6 +145,7 @@ export async function add_hours(data: BHAdd) {
         is_reset: false,
       });
     }
+    update_hours(data.uuid);
   }
 }
 

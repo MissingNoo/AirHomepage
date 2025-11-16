@@ -12,7 +12,7 @@ export default define.page(function App({ Component }) {
         <title>AirHomepage</title>
       </head>
       <body f-client-nav>
-        <div class="max-w flex flex-col items-center justify-center my-6">
+        <div class="max-w flex flex-col items-center justify-center lg:my-6 sr-only lg:not-sr-only">
           <div className="avatar">
             <div className="ring-primary ring-offset-base-100 w-38 rounded-full ring-2 ring-offset-2">
               <img height="256" src="/pfp.png" />
@@ -30,7 +30,7 @@ export default define.page(function App({ Component }) {
         </div>
         <div className="max-w-3x1 bg-base-200">
           <div className="items-center list">
-            <h1 class="text-4xl font-bold m-5">Airgeadlamh</h1>
+            <h1 class="text-4xl font-bold m-5 sr-only lg:not-sr-only">Airgeadlamh</h1>
           </div>
 
           <HomeMenu></HomeMenu>
