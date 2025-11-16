@@ -2,6 +2,7 @@ import { define } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import VtuberList from "../components/VtuberList.tsx";
 import { HomeMenu } from "../components/HomeMenu.tsx";
+import { Footer } from "../components/Footer.tsx";
 export default define.page(function App({ Component }) {
   return (
     <html>
@@ -68,6 +69,9 @@ export default define.page(function App({ Component }) {
           </div>
         </div>
       </body>
+      <footer>
+        <Footer></Footer>
+      </footer>
     </html>
   );
 });
