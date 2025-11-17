@@ -1,5 +1,4 @@
-import { Db, MongoClient, UUID } from "mongodb";
-import { setkey } from "./redis.ts";
+import { Db, MongoClient } from "mongodb";
 import holidays from "./holidays.json" with { type: "json" };
 import { compare, hash } from "bcrypt";
 
@@ -16,6 +15,7 @@ interface LoginData {
   base_hours: number;
   base_minutes: number;
   totalhours: string;
+  expected_pay: string;
 }
 const client = new MongoClient("mongodb://127.0.0.1:27017");
 client.connect();
@@ -24,6 +24,7 @@ function connect_db() {
   return db;
 }
 
+// deno-lint-ignore no-explicit-any
 function log(msg: any) {
   if (debug) {
     console.log(msg);
@@ -49,6 +50,7 @@ export async function register_user(
       totalhours: "",
       username: username,
       uuid: crypto.randomUUID(),
+      expected_pay: "",
     });
     return { message: "Registered" };
   }
@@ -123,15 +125,17 @@ export async function add_hours(data: BHAdd) {
       day: parseInt(date[2]),
       month: parseInt(date[1]),
       year: parseInt(date[0]),
-    }
+    };
     const existing_day = await info.findOne(filter);
     if (existing_day) {
-      info.updateOne(filter, {$set : {
-        entrada: data.entrada,
-        almoco: data.almoco,
-        volta: data.volta,
-        saida: data.saida,
-      }});
+      info.updateOne(filter, {
+        $set: {
+          entrada: data.entrada,
+          almoco: data.almoco,
+          volta: data.volta,
+          saida: data.saida,
+        },
+      });
     } else {
       info.insertOne({
         id: user.id,
@@ -172,6 +176,17 @@ export async function get_hours(id: number) {
   }
   if (!user) throw new Error("User not found!");
   return user.totalhours;
+}
+
+export async function get_pay(id: number) {
+  const db: Db = connect_db();
+  const users = db.collection<LoginData>("users");
+  const user = await users.findOne({ id: id });
+  if (debug) {
+    log(user);
+  }
+  if (!user) throw new Error("User not found!");
+  return user.expected_pay;
 }
 
 export async function update_hours(uuid: string) {
@@ -316,8 +331,21 @@ export async function update_hours(uuid: string) {
   const minutesstring = (totalminutes < 10 ? "0" : "") +
     totalminutes.toString();
   log("total: " + hourstring + ":" + minutesstring);
+
+  let hours_in_minutes = parseInt(minutesstring);
+  let _hours = parseInt(hourstring);
+  while (_hours > 0) {
+    _hours--;
+    hours_in_minutes += 60;
+  }
+  hours_in_minutes = hours_in_minutes / 60;
+  const expected_pay = parseFloat((12.55385 * hours_in_minutes).toString())
+    .toFixed(2);
   users.updateOne({ id: user.id }, {
-    $set: { totalhours: hourstring + ":" + minutesstring },
+    $set: {
+      totalhours: hourstring + ":" + minutesstring,
+      expected_pay: expected_pay.toString(),
+    },
   });
   //setkey(user.id.toString(), hourstring + ":" + minutesstring);
 }

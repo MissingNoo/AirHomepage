@@ -12,7 +12,11 @@ export default define.page(function Home(ctx) {
       </Head>
 
       <div class="">
-        <LoadHours hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
+        <LoadHours
+          hours={ctx.state.hours}
+          loggedin={ctx.state.logged_in}
+          expected_pay={ctx.state.expected_pay}
+        >
         </LoadHours>
         <p className="m-10 bg-base-100">
           You currently {isAllowed ? "are" : "are not"} logged in

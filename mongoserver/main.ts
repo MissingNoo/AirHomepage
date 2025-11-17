@@ -2,11 +2,11 @@ import {
   add_hours,
   get_day,
   get_hours,
+  get_pay,
   register_user,
   update_hours,
   verify_login,
 } from "./mongo.ts";
-import { getkey } from "./redis.ts";
 import { db_port } from "../settings.ts";
 export const debug = Deno.args[0] == "--debug";
 async function handler(request: Request): Promise<Response> {
@@ -58,10 +58,14 @@ async function handler(request: Request): Promise<Response> {
 
         case "get_hours": {
           const hours: string = await get_hours(parseInt(data.id)) ?? "00:00";
-          return new Response(JSON.stringify({ hours: hours }), {
-            headers: { "Content-Type": "application/json" },
-            status: 200,
-          });
+          const pay: string = await get_pay(parseInt(data.id)) ?? "0.00";
+          return new Response(
+            JSON.stringify({ hours: hours, expected_pay: pay }),
+            {
+              headers: { "Content-Type": "application/json" },
+              status: 200,
+            },
+          );
         }
 
         case "add_hours": {

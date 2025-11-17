@@ -3,7 +3,6 @@ import { define } from "../../../utils.ts";
 import { Partial } from "fresh/runtime";
 import { fetch_data, getCookie } from "../../../utils.ts";
 import LoadHours from "../../../islands/LoadHours.tsx";
-import { totalhours } from "../../../signals.ts";
 import { TotalHours } from "../../../components/TotalHours.tsx";
 export const handler = define.handlers({
   /*async GET(ctx) {
@@ -71,7 +70,11 @@ export default define.page((ctx) => {
           loggedin={ctx.state.logged_in}
         >
         </BHInsert>
-        <LoadHours hours={ctx.state.hours} loggedin={ctx.state.logged_in}>
+        <LoadHours
+          hours={ctx.state.hours}
+          loggedin={ctx.state.logged_in}
+          expected_pay={ctx.state.expected_pay}
+        >
         </LoadHours>
       </div>
     </Partial>

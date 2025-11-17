@@ -13,6 +13,7 @@ export interface State {
   uuid: string;
   id: string;
   hours: string;
+  expected_pay: string;
   message: Signal<string>;
 }
 
@@ -37,8 +38,8 @@ export async function sha256(input: string) {
   return hash;
 }
 
-// deno-lint-ignore no-explicit-any
 export async function fetch_data(
+  // deno-lint-ignore no-explicit-any
   j: any,
   url: string = "http://127.0.0.1:" + db_port.toString(),
 ) {

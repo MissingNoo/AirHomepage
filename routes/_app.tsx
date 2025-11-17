@@ -31,7 +31,9 @@ export default define.page(function App({ Component }) {
         </div>
         <div className="max-w-3x1 bg-base-200">
           <div className="items-center list">
-            <h1 class="text-4xl font-bold m-5 sr-only lg:not-sr-only">Airgeadlamh</h1>
+            <h1 class="text-4xl font-bold m-5 sr-only lg:not-sr-only">
+              Airgeadlamh
+            </h1>
           </div>
 
           <HomeMenu></HomeMenu>

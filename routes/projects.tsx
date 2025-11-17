@@ -6,7 +6,7 @@ export default define.page(() => {
   return (
     <Partial name="docs-content">
       <div class="m-2 flex not-lg:flex-col">
-      <Card
+        <Card
           image=""
           link="/projects/BH/BH"
           text="Banco de Hora"

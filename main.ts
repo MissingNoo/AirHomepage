@@ -15,8 +15,10 @@ app.use(async (ctx) => {
   const data = await fetch_data({ type: "get_hours", id: ctx.state.id });
   try {
     ctx.state.hours = data.hours;
+    ctx.state.expected_pay = data.expected_pay;
   } catch (_error) {
     ctx.state.hours = "?";
+    ctx.state.expected_pay = "?";
   }
 
   return await ctx.next();
