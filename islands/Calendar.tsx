@@ -2,9 +2,8 @@
 import { IS_BROWSER } from "fresh/runtime";
 import { off } from "node:process";
 import moment from "npm:moment";
-const years: { [key: string]: any[] } = {
-};
-const startdate = [2025,11,16];
+const years: { [key: string]: any[] } = {};
+const startdate = [2025, 11, 16];
 let color = "blue";
 let start_color = "blue";
 let offset = 1;
@@ -24,16 +23,21 @@ for (let year = 2025; year <= 2026; year++) {
         years["y" + year][month][day] = ["W", "gray"];
         continue;
       }
-      const this_day = moment(year+"/"+month+"/"+day);
-      years["y" + year][month][day] = [day , "gray"];
-      
-      if (parseInt(this_day.format("MM")) > month || this_day.format("YYYY/MM/DD") == "Invalid date") {
-        years["y" + year][month][day] = ["X" , "gray"];
+      const this_day = moment(year + "/" + month + "/" + day);
+      years["y" + year][month][day] = [day, "gray"];
+
+      if (
+        parseInt(this_day.format("MM")) > month ||
+        this_day.format("YYYY/MM/DD") == "Invalid date"
+      ) {
+        years["y" + year][month][day] = ["X", "gray"];
         continue;
       }
       //console.log(this_day.format("YYYY/MM/DD dddd"));
       if (this_day.format("dddd") == "Sunday") {
-        if (year == startdate[0] && month == startdate[1] && day == startdate[2]) {
+        if (
+          year == startdate[0] && month == startdate[1] && day == startdate[2]
+        ) {
           offset = start_offset;
           color = start_color;
         }
@@ -50,10 +54,9 @@ for (let year = 2025; year <= 2026; year++) {
         }
       }
     }
-  }  
+  }
 }
 //console.log(years);
-
 
 export default function Calendar() {
   const d = new Date();
@@ -61,7 +64,7 @@ export default function Calendar() {
   for (let year = 2025; year <= 2026; year++) {
     calendar += "</table><table>" + year;
     for (let month = 1; month <= 12; month++) {
-      calendar += "<table>"
+      calendar += "<table>";
       const next_month = years["y" + year][month][1];
       if (next_month[0] == "W") {
         continue;
@@ -76,22 +79,25 @@ export default function Calendar() {
         }
         const this_day = years["y" + year][month][day];
         //console.log(d.getMonth() + 1 + ":" +this_day)
-        calendar += "<td style=\"background-color:" + this_day[1] + ";\">"+ this_day[0] +"</td>";
+        calendar += '<td style="background-color:' + this_day[1] + ';">' +
+          this_day[0] + "</td>";
         if (day == 7 || day == 14 || day == 21 || day == 28) {
           calendar += "</tr><tr>";
         }
       }
-      calendar += "</table>"
-      
+      calendar += "</table>";
     }
   }
-  
-  
+
   let calend = "</tr></table>";
   let result = calendar + calend;
   return (
     <div class="flex gap-8 py-6">
-      <div className="bg-base-300 border-2" dangerouslySetInnerHTML={{__html : result}}></div>
+      <div
+        className="bg-base-300 border-2"
+        dangerouslySetInnerHTML={{ __html: result }}
+      >
+      </div>
     </div>
   );
 }

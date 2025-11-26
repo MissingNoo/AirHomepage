@@ -272,8 +272,12 @@ export async function update_hours(uuid: string) {
             if (!bh) {
               if (is_sunday) {
                 log("[" + month + "/" + day + "] Sunday");
+                if ((hours >= 0 && minutes > 0)) {
+                  hours = 0;
+                  minutes = 0;
+                }
               }
-              if (!is_sunday) {
+              if (true) {
                 totalhours += hours;
                 totalminutes += minutes;
                 if (totalminutes >= 60) {
@@ -291,9 +295,9 @@ export async function update_hours(uuid: string) {
                   totalminutes.toString();
                 log(
                   "[" + month + "/" + day + "] + (" +
-                    (hours < 10 ? "0" + hours : hours) + ":" +
+                    (hours < 10 && hours > -1 ? "0" + hours : hours) + ":" +
                     (minutes < 10 ? "0" + minutes : minutes) + ") " +
-                    hourstring + ":" + minutesstring,
+                    hourstring + ":" + minutesstring + (hours < 0 ? " BH" : ""),
                 );
               } /* else if (hours < 0) {
                                 totalhours += hours;
@@ -317,7 +321,7 @@ export async function update_hours(uuid: string) {
                 totalminutes.toString();
               log(
                 "[" + month + "/" + day + "] - (" + bh_time[0] + ":" +
-                  bh_time[1] + ") " + hourstring + ":" + minutesstring,
+                  bh_time[1] + ") " + hourstring + ":" + minutesstring + " BH",
               );
             }
           } else {
