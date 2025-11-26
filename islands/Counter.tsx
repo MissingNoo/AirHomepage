@@ -1,7 +1,6 @@
 // deno-lint-ignore-file react-no-danger
 import type { Signal } from "@preact/signals";
 import { Button } from "../components/Button.tsx";
-import { IS_BROWSER } from "fresh/runtime";
 interface CounterProps {
   count: Signal<number>;
   text: Signal<string>;

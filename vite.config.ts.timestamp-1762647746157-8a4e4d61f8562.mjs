@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 // vite.config.ts
 import { defineConfig } from "file:///home/airgeadlamh/Documentos/GitHub/Deno/Fresh/AirHomepage/node_modules/.deno/vite@7.1.12/node_modules/vite/dist/node/index.js";
 import { fresh } from "@fresh/plugin-vite";

@@ -1,14 +1,13 @@
 // deno-lint-ignore-file react-no-danger
-import { IS_BROWSER } from "fresh/runtime";
-import { off } from "node:process";
-import moment from "npm:moment";
+import moment from "npm:moment@2.30.1";
+// deno-lint-ignore no-explicit-any
 const years: { [key: string]: any[] } = {};
 const startdate = [2025, 11, 16];
 let color = "blue";
-let start_color = "blue";
+const start_color = "blue";
 let offset = 1;
 const start_offset = 1;
-const d = new Date();
+//const d = new Date();
 for (let year = 2025; year <= 2026; year++) {
   if (year < startdate[0]) {
     continue;
@@ -59,7 +58,7 @@ for (let year = 2025; year <= 2026; year++) {
 //console.log(years);
 
 export default function Calendar() {
-  const d = new Date();
+  //const d = new Date();
   let calendar = "<table>";
   for (let year = 2025; year <= 2026; year++) {
     calendar += "</table><table>" + year;
@@ -89,8 +88,8 @@ export default function Calendar() {
     }
   }
 
-  let calend = "</tr></table>";
-  let result = calendar + calend;
+  const calend = "</tr></table>";
+  const result = calendar + calend;
   return (
     <div class="flex gap-8 py-6">
       <div

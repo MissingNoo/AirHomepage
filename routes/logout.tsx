@@ -12,7 +12,7 @@ export default define.page(() => {
 });
 
 export const handler = define.handlers({
-  POST(ctx) {
+  POST() {
     const headers = new Headers();
     headers.set("location", "/");
     headers.append("set-cookie", "loggedin=false");

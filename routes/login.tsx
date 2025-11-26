@@ -1,4 +1,4 @@
-import { define, fetch_data, sha256 } from "../utils.ts";
+import { define, fetch_data } from "../utils.ts";
 import { Partial } from "fresh/runtime";
 import LoginForm from "../islands/LoginForm.tsx";
 

@@ -277,7 +277,8 @@ export async function update_hours(uuid: string) {
                   minutes = 0;
                 }
               }
-              if (true) {
+              const a = true;
+              if (a) {
                 totalhours += hours;
                 totalminutes += minutes;
                 if (totalminutes >= 60) {
