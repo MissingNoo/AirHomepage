@@ -40,6 +40,7 @@
     "npm:esbuild-wasm@~0.25.11": "0.25.12",
     "npm:esbuild@0.25.7": "0.25.7",
     "npm:esbuild@~0.25.5": "0.25.7",
+    "npm:moment@^2.30.1": "2.30.1",
     "npm:mongodb@7": "7.0.0",
     "npm:preact-render-to-string@^6.6.3": "6.6.3_preact@10.27.2",
     "npm:preact@^10.27.0": "10.27.2",
@@ -1081,6 +1082,9 @@
     "memory-pager@1.5.0": {
       "integrity": "sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg=="
     },
+    "moment@2.30.1": {
+      "integrity": "sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how=="
+    },
     "mongodb-connection-string-url@7.0.0": {
       "integrity": "sha512-irhhjRVLE20hbkRl4zpAYLnDMM+zIZnp0IDB9akAFFUZp/3XdOfwwddc7y6cNvF2WCEtfTYRwYbIfYa2kVY0og==",
       "dependencies": [
@@ -1271,6 +1275,7 @@
       "npm:@tailwindcss/vite@^4.1.12",
       "npm:@valkey/valkey-glide@^2.1.2",
       "npm:daisyui@^5.4.5",
+      "npm:moment@^2.30.1",
       "npm:mongodb@7",
       "npm:preact@^10.27.2",
       "npm:tailwindcss@^4.1.10",

@@ -4,6 +4,7 @@ import { Partial } from "fresh/runtime";
 import { fetch_data, getCookie } from "../../../utils.ts";
 import LoadHours from "../../../islands/LoadHours.tsx";
 import { TotalHours } from "../../../components/TotalHours.tsx";
+import Calendar from "../../../islands/Calendar.tsx";
 export const handler = define.handlers({
   /*async GET(ctx) {
     const data = await fetch_data({ type: "get_hours", id: ctx.state.id });
@@ -70,6 +71,7 @@ export default define.page((ctx) => {
           loggedin={ctx.state.logged_in}
         >
         </BHInsert>
+        <Calendar></Calendar>
         <LoadHours
           hours={ctx.state.hours}
           loggedin={ctx.state.logged_in}

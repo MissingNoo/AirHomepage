@@ -24,6 +24,7 @@
     "@valkey/valkey-glide": "npm:@valkey/valkey-glide@^2.1.2",
     "daisyui": "npm:daisyui@^5.4.5",
     "fresh": "jsr:@fresh/core@^2.1.4",
+    "moment": "npm:moment@^2.30.1",
     "mongodb": "npm:mongodb@^7.0.0",
     "preact": "npm:preact@^10.27.2",
     "@preact/signals": "npm:@preact/signals@^2.3.2",
