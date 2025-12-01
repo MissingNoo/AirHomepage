@@ -7,39 +7,25 @@
     "start": "deno serve --port 5173 -A _fresh/server.js",
     "update": "deno run -A -r jsr:@fresh/update ."
   },
-  "lint": {
-    "rules": {
-      "tags": [
-        "fresh",
-        "recommended"
-      ]
-    }
-  },
-  "exclude": [
-    "**/_fresh/*"
-  ],
+  "lint": { "rules": { "tags": ["fresh", "recommended"] } },
+  "exclude": ["**/_fresh/*"],
   "imports": {
     "@/": "./",
     "@iuioiua/redis": "jsr:@iuioiua/redis@^1.1.9",
     "@valkey/valkey-glide": "npm:@valkey/valkey-glide@^2.1.2",
     "daisyui": "npm:daisyui@^5.4.5",
-    "fresh": "jsr:@fresh/core@^2.1.4",
+    "fresh": "jsr:@fresh/core@^2.2.0",
     "moment": "npm:moment@^2.30.1",
     "mongodb": "npm:mongodb@^7.0.0",
     "preact": "npm:preact@^10.27.2",
-    "@preact/signals": "npm:@preact/signals@^2.3.2",
+    "@preact/signals": "npm:@preact/signals@^2.5.0",
     "@fresh/plugin-vite": "jsr:@fresh/plugin-vite@^1.0.7",
     "vite": "npm:vite@^7.1.3",
     "tailwindcss": "npm:tailwindcss@^4.1.10",
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.12"
   },
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.asynciterable",
-      "dom.iterable",
-      "deno.ns"
-    ],
+    "lib": ["dom", "dom.asynciterable", "dom.iterable", "deno.ns"],
     "jsx": "precompile",
     "jsxImportSource": "preact",
     "jsxPrecompileSkipElements": [
@@ -58,8 +44,6 @@
       "noscript",
       "template"
     ],
-    "types": [
-      "vite/client"
-    ]
+    "types": ["vite/client"]
   }
 }

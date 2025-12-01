@@ -48,11 +48,14 @@ export async function fetch_data(
       body: JSON.stringify(j),
       method: "POST",
     });
-    const res = await response.json();
-    return res;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     // deno-lint-ignore no-explicit-any
-  } catch (error: any) {
-    console.error(error.message);
+    return (await response.json()) as any;
+  } catch (error) {
+    console.error(error);
+    //throw error;
   }
 }
 

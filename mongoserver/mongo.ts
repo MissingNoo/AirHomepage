@@ -205,13 +205,19 @@ export async function update_hours(uuid: string) {
       for (let day = 1; day <= 32; day++) {
         const holiday: boolean =
           typedHolidays["y" + year + "m" + month + "d" + day] != undefined;
+        const reset_today = await info.findOne({
+          id: 17144,
+          year: year,
+          month,
+          day,
+        }) ?? {is_reset : false};
         const today = await info.findOne({
           id: user.id,
           year: year,
           month,
           day,
         });
-        if (today && today.is_reset) {
+        if (today && reset_today.is_reset) {
           totalhours = 0;
           totalminutes = 0;
           log("[" + month + "/" + day + "] RESET");
@@ -395,7 +401,7 @@ async function _migration(uuid: string) {
         horario: "Saida",
       });
       const reset = await infoold.findOne({
-        id: user.id,
+        id: 17144,
         year: 2025,
         month,
         day,

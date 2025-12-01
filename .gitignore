@@ -13,3 +13,4 @@ vendor/
 
 #ignore project binaries
 static/vcure/*
+vite.config.ts.time*
