@@ -1,4 +1,7 @@
 // deno-lint-ignore-file react-no-danger
+import holidays from "../mongoserver/holidays.json" with { type: "json" };
+type Holidays = { [key: string]: string };
+const typedHolidays: Holidays = holidays;
 import moment from "npm:moment@2.30.1";
 // deno-lint-ignore no-explicit-any
 const years: { [key: string]: any[] } = {};
@@ -58,18 +61,45 @@ for (let year = 2025; year <= 2026; year++) {
 //console.log(years);
 
 export default function Calendar() {
-  //const d = new Date();
+  const d = new Date();
   let calendar = "<table>";
   for (let year = 2025; year <= 2026; year++) {
     calendar += "</table><table>" + year;
+
+    //weekdays
+    const basedays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const baseptdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado"];
+    //
+
     for (let month = 1; month <= 12; month++) {
       calendar += "<table>";
       const next_month = years["y" + year][month][1];
       if (next_month[0] == "W") {
         continue;
       }
+      if (year == d.getFullYear() && month < d.getMonth()) {
+        continue;
+      }
       calendar += "<tr>Mes " + month + "</tr><tr>";
+
+      //weekdays
+      let days = basedays;
+      let ptdays = baseptdays;
+      const momday = moment(year + "/" + month + "/01");
+      while (days[0] != momday.format("dddd")) {
+        days.push(days.shift() ?? "");
+        ptdays.push(ptdays.shift() ?? "");
+      }
+
+      for (let d = 0; d < days.length; d++) {
+        const element = ptdays[d];
+        calendar += '<td style="background-color:;">' + String(element).charAt(0) + String(element).charAt(1) + String(element).charAt(2) + "</td>";
+      }
+
+      calendar += "</tr><tr>";
+      //
       let max_day = 31;
+      let dcount = 0;
       for (let day = 1; day <= max_day; day++) {
         if (month == 2) {
           max_day = 28;
@@ -77,11 +107,18 @@ export default function Calendar() {
           max_day = 31;
         }
         const this_day = years["y" + year][month][day];
+        let bgcolor = this_day[1];
+        if (typedHolidays["y" + 2025 + "m" + month + "d" + day] != undefined) {
+          bgcolor = "pink";
+        }
+        
         //console.log(d.getMonth() + 1 + ":" +this_day)
-        calendar += '<td style="background-color:' + this_day[1] + ';">' +
+        calendar += '<td style="background-color:' + bgcolor + ';">' +
           this_day[0] + "</td>";
-        if (day == 7 || day == 14 || day == 21 || day == 28) {
+        dcount++;
+        if (dcount == 7) {
           calendar += "</tr><tr>";
+          dcount = 0;
         }
       }
       calendar += "</table>";
