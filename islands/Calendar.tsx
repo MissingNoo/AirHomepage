@@ -77,7 +77,7 @@ export default function Calendar() {
       if (next_month[0] == "W") {
         continue;
       }
-      if (year == d.getFullYear() && month < d.getMonth()) {
+      if (year == d.getFullYear() && month <= d.getMonth()) {
         continue;
       }
       calendar += "<tr>Mes " + month + "</tr><tr>";
