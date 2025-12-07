@@ -16,12 +16,16 @@ export const handler = define.handlers({
     const username = form.get("username")?.toString() ?? "";
     const password = form.get("password")?.toString() ?? "";
     const idd = form.get("idd")?.toString() ?? "";
+    const folga = form.get("folga")?.toString() ?? "";
+    const escala = form.get("escala")?.toString() ?? "";
     const headers = new Headers();
     const j = {
       type: "register",
       username,
       password,
       idd,
+      folga,
+      escala,
     };
     const data = await fetch_data(j);
 

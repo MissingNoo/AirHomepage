@@ -40,6 +40,16 @@ export const handler = define.handlers({
         "set-cookie",
         "id=" + data.id.toString() + ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
       );
+      headers.append(
+        "set-cookie",
+        "folga=" + data.folga.toString() +
+          ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
+      headers.append(
+        "set-cookie",
+        "escala=" + data.escala.toString() +
+          ";Expires=Fri, 15 Dec 3023 12:00:00 GMT",
+      );
     }
 
     return new Response(null, {

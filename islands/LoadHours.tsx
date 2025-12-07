@@ -12,7 +12,7 @@ export default function LoadHours(props: props) {
       if (h) {
         if (props.loggedin) {
           h.textContent = " " + props.hours + " Horas (R$" +
-            props.expected_pay + ")";
+            String(parseFloat(props.expected_pay) * 0.6) + ")";
         } else {
           h.style = "display:none";
         }

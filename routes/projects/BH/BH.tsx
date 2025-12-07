@@ -71,7 +71,11 @@ export default define.page((ctx) => {
           loggedin={ctx.state.logged_in}
         >
         </BHInsert>
-        <Calendar></Calendar>
+        <Calendar
+          escala={getCookie(ctx, "escala") ?? ""}
+          folga={getCookie(ctx, "folga") ?? ""}
+        >
+        </Calendar>
         <LoadHours
           hours={ctx.state.hours}
           loggedin={ctx.state.logged_in}

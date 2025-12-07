@@ -16,6 +16,8 @@ interface LoginData {
   base_minutes: number;
   totalhours: string;
   expected_pay: string;
+  folga: string;
+  escala: string;
 }
 const client = new MongoClient("mongodb://127.0.0.1:27017");
 client.connect();
@@ -35,6 +37,8 @@ export async function register_user(
   username: string,
   password: string,
   idd: number,
+  folga: string,
+  escala: string,
 ) {
   const db: Db = connect_db();
   const users = db.collection<LoginData>("users");
@@ -51,6 +55,8 @@ export async function register_user(
       username: username,
       uuid: crypto.randomUUID(),
       expected_pay: "",
+      folga: folga,
+      escala: escala,
     });
     return { message: "Registered" };
   }
@@ -66,7 +72,13 @@ export async function verify_login(username: string, password: string) {
   const user = await users.findOne({ username: username });
   if (user) {
     if (await compare(password, user.password)) {
-      return { message: "sucess", uuid: user.uuid, id: user.id };
+      return {
+        message: "sucess",
+        uuid: user.uuid,
+        id: user.id,
+        folga: user.folga,
+        escala: user.escala,
+      };
     } else {
       return { message: "Invalid password" };
     }
@@ -210,7 +222,7 @@ export async function update_hours(uuid: string) {
           year: year,
           month,
           day,
-        }) ?? {is_reset : false};
+        }) ?? { is_reset: false };
         const today = await info.findOne({
           id: user.id,
           year: year,

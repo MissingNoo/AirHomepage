@@ -1,6 +1,11 @@
 // deno-lint-ignore-file react-no-danger
 import holidays from "../mongoserver/holidays.json" with { type: "json" };
+
 type Holidays = { [key: string]: string };
+interface CalendarProps {
+  folga: string;
+  escala: string;
+}
 const typedHolidays: Holidays = holidays;
 import moment from "npm:moment@2.30.1";
 // deno-lint-ignore no-explicit-any
@@ -11,64 +16,102 @@ const start_color = "blue";
 let offset = 1;
 const start_offset = 1;
 //const d = new Date();
-for (let year = 2025; year <= 2026; year++) {
-  if (year < startdate[0]) {
-    continue;
-  }
-  for (let month = 1; month <= 12; month++) {
-    if (!years["y" + year]) {
-      years["y" + year] = [];
+function build(folga: string, escala: string) {
+  for (let year = 2025; year <= 2026; year++) {
+    if (year < startdate[0]) {
+      continue;
     }
-    years["y" + year][month] = [];
-    for (let day = 1; day <= 31; day++) {
-      if (year == startdate[0] && month < startdate[1] && day < startdate[2]) {
-        years["y" + year][month][day] = ["W", "gray"];
-        continue;
+    for (let month = 1; month <= 12; month++) {
+      if (!years["y" + year]) {
+        years["y" + year] = [];
       }
-      const this_day = moment(year + "/" + month + "/" + day);
-      years["y" + year][month][day] = [day, "gray"];
-
-      if (
-        parseInt(this_day.format("MM")) > month ||
-        this_day.format("YYYY/MM/DD") == "Invalid date"
-      ) {
-        years["y" + year][month][day] = ["X", "gray"];
-        continue;
-      }
-      //console.log(this_day.format("YYYY/MM/DD dddd"));
-      if (this_day.format("dddd") == "Sunday") {
+      years["y" + year][month] = [];
+      for (let day = 1; day <= 31; day++) {
         if (
-          year == startdate[0] && month == startdate[1] && day == startdate[2]
+          year == startdate[0] && month < startdate[1] && day < startdate[2]
         ) {
-          offset = start_offset;
-          color = start_color;
+          years["y" + year][month][day] = ["W", "gray"];
+          continue;
+        }
+        const this_day = moment(year + "/" + month + "/" + day);
+        years["y" + year][month][day] = [day, "gray"];
+
+        if (
+          parseInt(this_day.format("MM")) > month ||
+          this_day.format("YYYY/MM/DD") == "Invalid date"
+        ) {
+          years["y" + year][month][day] = ["X", "gray"];
+          continue;
         }
         //console.log(this_day.format("YYYY/MM/DD dddd"));
-        years["y" + year][month][day] = [day, color];
-        offset++;
+        if (this_day.format("dddd") == "Sunday") {
+          if (
+            year == startdate[0] && month == startdate[1] && day == startdate[2]
+          ) {
+            offset = start_offset;
+            color = start_color;
+          }
+          //console.log(this_day.format("YYYY/MM/DD dddd"));
+          years["y" + year][month][day] = [day, color];
+          offset++;
+          if (offset > 2) {
+            if (color == "red") {
+              color = "blue";
+            } else {
+              color = "red";
+            }
+          }
+        }
+        const mycolor = escala;
+        const myday = folga;
+        let freecolor = "gray";
+        if (this_day.format("dddd") == myday) {
+          console.log(this_day.format("YYYY/MM/DD dddd"));
+          if (offset == 1 || offset == 3) {
+            freecolor = "purple";
+          }
+          if (offset == 2 && color == mycolor) {
+            freecolor = "purple";
+          }
+          years["y" + year][month][day] = [day, freecolor];
+        }
+        console.log(offset);
         if (offset > 2) {
           offset = 1;
-          if (color == "red") {
-            color = "blue";
-          } else {
-            color = "red";
-          }
         }
       }
     }
   }
 }
+
 //console.log(years);
 
-export default function Calendar() {
+export default function Calendar(props: CalendarProps) {
+  build(props.folga, props.escala);
   const d = new Date();
   let calendar = "<table>";
   for (let year = 2025; year <= 2026; year++) {
     calendar += "</table><table>" + year;
 
     //weekdays
-    const basedays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const baseptdays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sabado"];
+    const basedays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const baseptdays = [
+      "Domingo",
+      "Segunda",
+      "Terça",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sabado",
+    ];
     //
 
     for (let month = 1; month <= 12; month++) {
@@ -83,8 +126,8 @@ export default function Calendar() {
       calendar += "<tr>Mes " + month + "</tr><tr>";
 
       //weekdays
-      let days = basedays;
-      let ptdays = baseptdays;
+      const days = basedays;
+      const ptdays = baseptdays;
       const momday = moment(year + "/" + month + "/01");
       while (days[0] != momday.format("dddd")) {
         days.push(days.shift() ?? "");
@@ -93,7 +136,9 @@ export default function Calendar() {
 
       for (let d = 0; d < days.length; d++) {
         const element = ptdays[d];
-        calendar += '<td style="background-color:;">' + String(element).charAt(0) + String(element).charAt(1) + String(element).charAt(2) + "</td>";
+        calendar += '<td style="background-color:;">' +
+          String(element).charAt(0) + String(element).charAt(1) +
+          String(element).charAt(2) + "</td>";
       }
 
       calendar += "</tr><tr>";
@@ -111,7 +156,7 @@ export default function Calendar() {
         if (typedHolidays["y" + 2025 + "m" + month + "d" + day] != undefined) {
           bgcolor = "pink";
         }
-        
+
         //console.log(d.getMonth() + 1 + ":" +this_day)
         calendar += '<td style="background-color:' + bgcolor + ';">' +
           this_day[0] + "</td>";
@@ -128,7 +173,12 @@ export default function Calendar() {
   const calend = "</tr></table>";
   const result = calendar + calend;
   return (
-    <div class="flex gap-8 py-6">
+    <div class="flex-row gap-8 py-6">
+      <p>Legenda:</p>
+      <p style="background-color:purple">Folga da semana</p>
+      <p style="background-color:red">Domingo vermelho</p>
+      <p style="background-color:blue">Domingo azul</p>
+      <p style="background-color:pink">Feriado</p>
       <div
         className="bg-base-300 border-2"
         dangerouslySetInnerHTML={{ __html: result }}

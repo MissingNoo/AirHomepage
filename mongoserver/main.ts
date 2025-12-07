@@ -31,7 +31,13 @@ async function handler(request: Request): Promise<Response> {
 
         case "register": {
           //console.log("Received POST data:", data);
-          await register_user(data.username, data.password, parseInt(data.idd));
+          await register_user(
+            data.username,
+            data.password,
+            parseInt(data.idd),
+            data.folga,
+            data.escala,
+          );
           const res = await verify_login(data.username, data.password);
           return new Response(JSON.stringify(res), {
             headers: { "Content-Type": "application/json" },
