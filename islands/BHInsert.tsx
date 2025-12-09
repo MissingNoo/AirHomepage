@@ -63,7 +63,7 @@ export default function BHInsert(props: props) {
     }
   });
   if (!props.loggedin) {
-    return <p>Not logged in</p>;
+    return <p>Faça login para utilizar</p>;
   }
   /*getData().then((res) => {
     props.text.value = res?.toString() ?? "";

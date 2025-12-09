@@ -1,3 +1,5 @@
+// deno-lint-ignore-file
+// deno-lint-ignore-file react-no-danger
 export interface ModalProps {
   button_id?: string;
   modal_id?: string;
@@ -13,7 +15,7 @@ export function Modal(props: ModalProps) {
         id={props.button_id}
         class="btn"
         onClick={() => {
-          alert("test");
+          
           const modal = props.modal_id
             ? document.getElementById(props.modal_id)
             : null;
@@ -26,7 +28,7 @@ export function Modal(props: ModalProps) {
       </button>
       <dialog id={props.modal_id} class="modal">
         <form method="dialog" class="modal-box">
-          <p class="py-4">{props.text}</p>
+          <p class="py-4" dangerouslySetInnerHTML={{__html : props.text ?? ""}}>{}</p>
           <div class="modal-action">
             <button type="submit" class="btn">Close</button>
           </div>

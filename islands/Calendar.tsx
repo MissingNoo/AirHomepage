@@ -1,4 +1,4 @@
-// deno-lint-ignore-file react-no-danger
+import { Modal } from "../components/Modal.tsx";
 import holidays from "../mongoserver/holidays.json" with { type: "json" };
 
 type Holidays = { [key: string]: string };
@@ -171,19 +171,23 @@ export default function Calendar(props: CalendarProps) {
   }
 
   const calend = "</tr></table>";
-  const result = calendar + calend;
+  const start = '\
+  <p>Legenda:</p>\
+      <p style="background-color:purple">Folga da semana</p>\
+      <p style="background-color:red">Domingo vermelho</p>\
+      <p style="background-color:blue">Domingo azul</p>\
+      <p style="background-color:pink">Feriado</p>\
+  '
+  const result = start + calendar + calend;
   return (
     <div class="flex-row gap-8 py-6">
-      <p>Legenda:</p>
-      <p style="background-color:purple">Folga da semana</p>
-      <p style="background-color:red">Domingo vermelho</p>
-      <p style="background-color:blue">Domingo azul</p>
-      <p style="background-color:pink">Feriado</p>
-      <div
+      <Modal button_id="calendar" button_text="Abrir Calendario" modal_id="calend" text={result}></Modal>
+      
+      {/*<div
         className="bg-base-300 border-2"
         dangerouslySetInnerHTML={{ __html: result }}
       >
-      </div>
+      </div>*/}
     </div>
   );
 }
