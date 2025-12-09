@@ -7,14 +7,14 @@ export default function RegisterForm() {
       <form onSubmit={go_home} method="post">
         <input
           type="text"
-          placeholder="Username"
+          placeholder="Usuario"
           className="input"
           name="username"
         />
         <p></p>
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Senha"
           className="input"
           name="password"
         />

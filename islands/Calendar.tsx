@@ -66,7 +66,7 @@ function build(folga: string, escala: string) {
         const myday = folga;
         let freecolor = "gray";
         if (this_day.format("dddd") == myday) {
-          console.log(this_day.format("YYYY/MM/DD dddd"));
+          //console.log(this_day.format("YYYY/MM/DD dddd"));
           if (offset == 1 || offset == 3) {
             freecolor = "purple";
           }
@@ -75,7 +75,7 @@ function build(folga: string, escala: string) {
           }
           years["y" + year][month][day] = [day, freecolor];
         }
-        console.log(offset);
+        //console.log(offset);
         if (offset > 2) {
           offset = 1;
         }

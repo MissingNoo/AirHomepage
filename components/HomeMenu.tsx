@@ -11,6 +11,9 @@ export function HomeMenu() {
             <a href="/">Home</a>
           </li>
           <li>
+            <a href="/projects/BH/BH">BH</a>
+          </li>
+          <li>
             <a href="/projects">Projects</a>
           </li>
           <li>

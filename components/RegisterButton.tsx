@@ -2,7 +2,7 @@
 import { loggedin } from "../signals.ts";
 
 export function RegisterButton() {
-  const ret = '<a href="/register" f-partial="/register">Register</a>';
+  const ret = '<a href="/register" f-partial="/register">Registrar</a>';
   return (
     <div
       style={loggedin.value ? "display:none" : ""}
