@@ -6,7 +6,13 @@ export default function VtuberList() {
       <li className="p-4 pb-2 text-xs opacity-60 tracking-wide self-center">
         Favorite VTubers
       </li>
-
+      <Vtuber
+        name="Maifumi"
+        img="maifumi.png"
+        description="test2"
+        ytlink="https://www.youtube.com/@Maifumiii"
+      >
+      </Vtuber>
       <Vtuber
         name="Hakos Baelz"
         img="baelz.png"
