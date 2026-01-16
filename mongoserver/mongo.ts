@@ -211,7 +211,10 @@ export async function update_hours(uuid: string) {
   const current_year = current.getFullYear();
   let totalhours = 0;
   let totalminutes = 0;
-
+  const newstart = moment("2026/01/02","YYYY/MM/DD");
+  let week_color = "red";
+  let new_system = false;
+  let total_work_hours = "07:20";
   for (let year = 2025; year <= current_year; year++) {
     for (let month = 1; month <= 12; month++) {
       for (let day = 1; day <= 32; day++) {
@@ -229,6 +232,29 @@ export async function update_hours(uuid: string) {
           month,
           day,
         });
+        if (moment(
+          year + "/" + month + "/" + day,
+          "YYYY/MM/DD",
+        ) > newstart) {
+          new_system = true;
+        }
+        const is_sunday = moment.utc(
+          moment(
+            year + "/" + month + "/" + day,
+            "YYYY/MM/DD",
+          ),
+        ).format("dddd") == "Sunday";
+        if (new_system) {
+          
+          
+          if (is_sunday) {
+            week_color = week_color == "blue" ? "red" : "blue";
+            total_work_hours = "06:00";
+          } else {
+            total_work_hours = week_color == user.escala ? "07:50" : "07:26";
+          }
+          //console.log("Tday is after new system " + year + "/" + month + "/" + day + ":" + week_color + ":" + total_work_hours)
+        }
         if (today && reset_today.is_reset) {
           totalhours = 0;
           totalminutes = 0;
@@ -241,6 +267,7 @@ export async function update_hours(uuid: string) {
               "YYYY/MM/DD HH:mm:ss",
             ),
           ).format("dddd") == "Sunday";
+          
           let bh: boolean = false;
           let bh_time: Array<string> = ["", ""];
           let had_lunch: boolean = false;
@@ -258,26 +285,15 @@ export async function update_hours(uuid: string) {
             minutes -= Number.parseInt(lunch_time[1]);
             hours -= Number.parseInt(lunch_time[0]);
           }
-          /*let total:Array<string> = ["", ""];
-                    let extra:Array<string> = ["", ""];
-                    if (!bh) {
-                        total = hour_diff(lunch_time[0] + ":" + lunch_time[1], worked_hours[0] + ":" + worked_hours[1]).split(":");
-                        if (parseInt(total[0]) < 7) {
-                            extra = hour_diff(total[0] + ":" + total[1], "07:20").split(":");
-                        } else {
-                            extra = hour_diff("07:20", total[0] + ":" + total[1]).split(":");
-                        }
-
-                        hours = parseInt(extra[0]);
-                        minutes = parseInt(extra[1]);
-                        log("extra [" + month + "/" + day + "] " + extra);*/
           if (!bh) {
-            hours -= 7;
-            minutes -= 20;
+            console.log(hours + ":" + minutes + " / " + total_work_hours)
+            hours -= Number(total_work_hours.split(":")[0]);
+            minutes -= Number(total_work_hours.split(":")[1]);
           } else {
+            
             bh_time = hour_diff(
               worked_hours[0] + ":" + worked_hours[1],
-              "07:20",
+              total_work_hours,
             ).split(":");
           }
 
@@ -299,7 +315,7 @@ export async function update_hours(uuid: string) {
               if (a) {
                 totalhours += hours;
                 totalminutes += minutes;
-                if (totalminutes >= 60) {
+                if (totalminutes > 60) {
                   totalminutes -= 60;
                   totalhours++;
                 }
@@ -312,10 +328,14 @@ export async function update_hours(uuid: string) {
                   totalhours.toString();
                 const minutesstring = (totalminutes < 10 ? "0" : "") +
                   totalminutes.toString();
-                log(
+                /*log(
                   "[" + month + "/" + day + "] + (" +
                     (hours < 10 && hours > -1 ? "0" + hours : hours) + ":" +
                     (minutes < 10 ? "0" + minutes : minutes) + ") " +
+                    hourstring + ":" + minutesstring + (hours < 0 ? " BH" : ""),
+                );*/
+                log(
+                  "[" + month + "/" + day + "]" +
                     hourstring + ":" + minutesstring + (hours < 0 ? " BH" : ""),
                 );
               } /* else if (hours < 0) {
