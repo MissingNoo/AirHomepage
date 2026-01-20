@@ -13,4 +13,5 @@ vendor/
 
 #ignore project binaries
 static/vcure/*
+static/maisound
 vite.config.ts.time*
