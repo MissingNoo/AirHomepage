@@ -17,6 +17,22 @@ export function Footer() {
         <p>Airgeadlamh - {new Date().getFullYear()}</p>
       </aside>
       <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+        <a href="https://fresh.deno.dev">
+          <img
+            width="24"
+            height="24"
+            src="https://fresh.deno.dev/logo.svg"
+            alt="Made with Fresh"
+          />
+        </a>
+        <a href="https://github.com/MissingNoo">
+        <img
+            width="24"
+            height="24"
+            src="/github.svg"
+            alt="View in Github"
+          />
+        </a>
         <a href="https://x.com/AirgeadlamhDev">
           <svg
             xmlns="http://www.w3.org/2000/svg"
