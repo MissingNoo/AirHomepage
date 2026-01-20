@@ -21,6 +21,13 @@ export default define.page(() => {
         >
         </Card>
         <Card
+          image="/ymm.png"
+          link="https://imissyumemi.337494.xyz/"
+          text="I Miss Yumemi"
+          subtext="Counter since her last live (currently broken for whatever reason)"
+        >
+        </Card>
+        <Card
           image=""
           link="/projects/BH/BH"
           text="Banco de Hora"
