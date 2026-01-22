@@ -26,7 +26,7 @@ export function Footer() {
           />
         </a>
         <a href="https://github.com/MissingNoo">
-        <img
+          <img
             width="24"
             height="24"
             src="/github.svg"

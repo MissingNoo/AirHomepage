@@ -177,17 +177,25 @@ export default function Calendar(props: CalendarProps) {
       <p style="background-color:red">Domingo vermelho</p>\
       <p style="background-color:blue">Domingo azul</p>\
       <p style="background-color:pink">Feriado</p>\
-  '
+  ';
   const result = start + calendar + calend;
   return (
     <div class="flex-row gap-8 py-6">
-      <Modal button_id="calendar" button_text="Abrir Calendario" modal_id="calend" text={result}></Modal>
-      
-      {/*<div
+      <Modal
+        button_id="calendar"
+        button_text="Abrir Calendario"
+        modal_id="calend"
+        text={result}
+      >
+      </Modal>
+
+      {
+        /*<div
         className="bg-base-300 border-2"
         dangerouslySetInnerHTML={{ __html: result }}
       >
-      </div>*/}
+      </div>*/
+      }
     </div>
   );
 }

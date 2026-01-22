@@ -1,7 +1,7 @@
 import { IS_BROWSER } from "fresh/runtime";
 import { go_home } from "../utils.ts";
 export default function RegisterForm() {
-  return ( <div>disabled</div>);
+  return <div>disabled</div>;
   if (!IS_BROWSER) return <div></div>;
   return (
     <div class="flex justify-center">

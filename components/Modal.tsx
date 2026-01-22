@@ -15,7 +15,6 @@ export function Modal(props: ModalProps) {
         id={props.button_id}
         class="btn"
         onClick={() => {
-          
           const modal = props.modal_id
             ? document.getElementById(props.modal_id)
             : null;
@@ -28,7 +27,12 @@ export function Modal(props: ModalProps) {
       </button>
       <dialog id={props.modal_id} class="modal">
         <form method="dialog" class="modal-box">
-          <p class="py-4" dangerouslySetInnerHTML={{__html : props.text ?? ""}}>{}</p>
+          <p
+            class="py-4"
+            dangerouslySetInnerHTML={{ __html: props.text ?? "" }}
+          >
+            {}
+          </p>
           <div class="modal-action">
             <button type="submit" class="btn">Close</button>
           </div>

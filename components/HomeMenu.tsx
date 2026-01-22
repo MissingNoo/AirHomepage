@@ -10,9 +10,11 @@ export function HomeMenu() {
           <li>
             <a href="/">Home</a>
           </li>
-          {/*<li>
+          {
+            /*<li>
             <a href="/projects/BH/BH">BH</a>
-          </li>*/}
+          </li>*/
+          }
           <li>
             <a href="/projects">Projects</a>
           </li>

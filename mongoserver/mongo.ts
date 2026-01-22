@@ -211,7 +211,7 @@ export async function update_hours(uuid: string) {
   const current_year = current.getFullYear();
   let totalhours = 0;
   let totalminutes = 0;
-  const newstart = moment("2026/01/02","YYYY/MM/DD");
+  const newstart = moment("2026/01/02", "YYYY/MM/DD");
   let week_color = "red";
   let new_system = false;
   let total_work_hours = "07:20";
@@ -232,10 +232,12 @@ export async function update_hours(uuid: string) {
           month,
           day,
         });
-        if (moment(
-          year + "/" + month + "/" + day,
-          "YYYY/MM/DD",
-        ) > newstart) {
+        if (
+          moment(
+            year + "/" + month + "/" + day,
+            "YYYY/MM/DD",
+          ) > newstart
+        ) {
           new_system = true;
         }
         const is_sunday = moment.utc(
@@ -245,8 +247,6 @@ export async function update_hours(uuid: string) {
           ),
         ).format("dddd") == "Sunday";
         if (new_system) {
-          
-          
           if (is_sunday) {
             week_color = week_color == "blue" ? "red" : "blue";
             total_work_hours = "06:00";
@@ -267,7 +267,7 @@ export async function update_hours(uuid: string) {
               "YYYY/MM/DD HH:mm:ss",
             ),
           ).format("dddd") == "Sunday";
-          
+
           let bh: boolean = false;
           let bh_time: Array<string> = ["", ""];
           let had_lunch: boolean = false;
@@ -286,11 +286,10 @@ export async function update_hours(uuid: string) {
             hours -= Number.parseInt(lunch_time[0]);
           }
           if (!bh) {
-            console.log(hours + ":" + minutes + " / " + total_work_hours)
+            console.log(hours + ":" + minutes + " / " + total_work_hours);
             hours -= Number(total_work_hours.split(":")[0]);
             minutes -= Number(total_work_hours.split(":")[1]);
           } else {
-            
             bh_time = hour_diff(
               worked_hours[0] + ":" + worked_hours[1],
               total_work_hours,
