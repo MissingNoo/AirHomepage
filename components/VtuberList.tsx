@@ -21,6 +21,14 @@ export default function VtuberList() {
       >
       </Vtuber>
       <Vtuber
+        name="Trickywi"
+        img="trickywi.png"
+        description="test2"
+        ytlink="https://www.youtube.com/@Trickywi"
+        twitchlink="https://www.twitch.tv/trickywi"
+      >
+      </Vtuber>
+      <Vtuber
         name="Yumemi Caelestis"
         img="ymm.png"
         description="test"

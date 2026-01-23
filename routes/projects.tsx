@@ -8,17 +8,24 @@ export default define.page(() => {
       <p class="mt-5 ml-5">Web Projects</p>
       <div class="m-2 flex not-lg:flex-col">
         <Card
-          image="/maifumi.png"
+          image=""
           link="/projects/maisound"
           text="Maifumi Soundboard"
           subtext="Funny soundboard"
         >
         </Card>
         <Card
-          image="/ymm.png"
+          image=""
           link="https://imissyumemi.337494.xyz/"
           text="I Miss Yumemi"
           subtext="Counter since her last live (currently broken for whatever reason)"
+        >
+        </Card>
+        <Card
+          image=""
+          link="https://github.com/MissingNoo/AirHomepage"
+          text="AirHomepage"
+          subtext="This website"
         >
         </Card>
       </div>
