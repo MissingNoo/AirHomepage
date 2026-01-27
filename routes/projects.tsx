@@ -72,9 +72,9 @@ export default define.page(() => {
       <div class="m-2 flex not-lg:flex-col">
         <Card
           image="Projects/VCure.png"
-          link="/vcure"
+          link="/vcure/index.html"
           text="[WIP] VCure"
-          subtext="Holocure clone"
+          subtext="Holocure clone (it can take some time to load on browser)"
         >
         </Card>
       </div>
