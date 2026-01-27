@@ -251,7 +251,7 @@ export async function update_hours(uuid: string) {
             week_color = week_color == "blue" ? "red" : "blue";
             total_work_hours = "06:00";
           } else {
-            total_work_hours = week_color == user.escala ? "07:50" : "07:26";
+            total_work_hours = week_color == user.escala ? "08:00" : "07:36";
           }
           //console.log("Tday is after new system " + year + "/" + month + "/" + day + ":" + week_color + ":" + total_work_hours)
         }
